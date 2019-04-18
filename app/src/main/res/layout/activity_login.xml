@@ -17,8 +17,8 @@
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/logo"
                 android:id="@+id/imageView"
                 android:contentDescription="Logo"/>
 
@@ -53,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/sign_up_btn"
                     style="@android:style/Widget.Material.Button"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:onClick="onSignUp"/>
 
             <Button
                     android:text="@string/login"
@@ -61,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/login_btn"
                     style="@android:style/Widget.Material.Button"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:onClick="onLogin"/>
 
         </LinearLayout>
 
@@ -72,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/google_sign_in_btn"
                 style="@android:style/Widget.Material.Button.Colored"
-                android:background="@color/colorRed"/>
+                android:background="@color/colorRed"
+                android:onClick="onGoogleSignIn"/>
     </LinearLayout>
 </ScrollView>
