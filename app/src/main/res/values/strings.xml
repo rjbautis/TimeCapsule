@@ -1,8 +1,20 @@
 <resources>
     <string name="app_name">Time Capsule</string>
+
+    <!-- LoginActivity -->
     <string name="password_hint">Password</string>
     <string name="email_hint">Email</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="google_sign_in">Sign In With Google</string>
+
+    <!-- ContributeActivity -->
+    <string name="noteSubmitted">Note submitted!</string>
+    <string name="contribute">Contribute</string>
+    <string name="addNotes">+ Notes</string>
+    <string name="noteHint">Type your note here!</string>
+    <string name="isPrivate">Private?</string>
+    <string name="submit">Submit!</string>
+    <string name="addPictures">+ Pictures</string>
+    <string name="addVideos">+ Videos</string>
 </resources>
