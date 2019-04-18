@@ -67,9 +67,17 @@
 
         </LinearLayout>
 
+        <ProgressBar
+                style="@android:style/Widget.Material.ProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="invisible"/>
+
         <Button
                 android:text="@string/google_sign_in"
-                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/google_sign_in_btn"

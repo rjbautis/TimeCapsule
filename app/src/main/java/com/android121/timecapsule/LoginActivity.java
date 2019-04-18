@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
+    private ProgressBar mProgressBar;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailEditText = findViewById(R.id.email_field);
         mPasswordEditText = findViewById(R.id.password_field);
+        mProgressBar = findViewById(R.id.progressBar);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                                             .requestIdToken(getString(R.string.default_web_client_id))
@@ -56,8 +59,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        // FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Users that are already logged in previously do not need to login again
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -74,6 +86,10 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseGoogleAuth(account);
             } catch (ApiException e) {
                 Log.d(TAG, "Google sign in failed.");
+
+                mProgressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(LoginActivity.this, "Sign in attempt with Google failed.",
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -83,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        Log.d(TAG, "Clicked Login button");
+        Log.d(TAG, "Clicked button");
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
@@ -92,6 +108,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        // Determine which function to call based on the button clicked
         switch (view.getId()) {
             case R.id.login_btn:
                 login(email, password);
@@ -125,9 +144,11 @@ public class LoginActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
+                            Log.d(LoginActivity.class.getSimpleName(), "signInWithEmailAndPassword: failed");
 
-                            Log.d(LoginActivity.class.getSimpleName(), "signInwithEmailAndPassword: failed");
+                            mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Authentication failed",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -152,9 +173,11 @@ public class LoginActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
-
                             Log.d(LoginActivity.class.getSimpleName(), "createUserWithEmailAndPassword: failed");
+
+                            mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Sign up failed. This email might have " +
                                     "an existing account signed up already.", Toast.LENGTH_LONG).show();
                         }
@@ -164,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        // Start Google's Sign In activity and wait for a result
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
 
@@ -183,9 +207,11 @@ public class LoginActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
-
                             Log.d(TAG, "signInWithCredential: failure", task.getException());
+
+                            mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Sign in attempt with Google failed.",
                                     Toast.LENGTH_LONG).show();
                         }
