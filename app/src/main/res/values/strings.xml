@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Time Capsule</string>
+
+    <!-- ContributeActivity -->
+    <string name="noteSubmitted">Note submitted!</string>
+    <string name="contribute">Contribute</string>
+    <string name="addNotes">+ Notes</string>
+    <string name="noteHint">Type your note here!</string>
+    <string name="isPrivate">Private?</string>
+    <string name="submit">Submit!</string>
+    <string name="addPictures">+ Pictures</string>
+    <string name="addVideos">+ Videos</string>
 </resources>

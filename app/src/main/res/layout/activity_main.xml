@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,4 +18,57 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout> -->
+
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addNotes"
+        android:id="@+id/addNotesButton"
+        android:onClick="showNoteText"
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/noteText"
+            android:visibility="gone"
+            android:hint="@string/noteHint"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/isNotePrivate"
+            android:text="@string/isPrivate"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/submitNoteButton"
+            android:text="@string/submit"
+            android:visibility="gone"
+            android:onClick="submitNote"
+            />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addPictures"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addVideos"
+        />
+
+</LinearLayout>
