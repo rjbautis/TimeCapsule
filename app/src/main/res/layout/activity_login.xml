@@ -54,7 +54,7 @@
                     android:id="@+id/sign_up_btn"
                     style="@android:style/Widget.Material.Button"
                     android:layout_weight="1"
-                    android:onClick="onSignUp"/>
+                    android:onClick="onClick"/>
 
             <Button
                     android:text="@string/login"
@@ -63,7 +63,7 @@
                     android:id="@+id/login_btn"
                     style="@android:style/Widget.Material.Button"
                     android:layout_weight="1"
-                    android:onClick="onLogin"/>
+                    android:onClick="onClick"/>
 
         </LinearLayout>
 
@@ -75,6 +75,6 @@
                 android:id="@+id/google_sign_in_btn"
                 style="@android:style/Widget.Material.Button.Colored"
                 android:background="@color/colorRed"
-                android:onClick="onGoogleSignIn"/>
+                android:onClick="onClick"/>
     </LinearLayout>
 </ScrollView>
