@@ -8,6 +8,13 @@
     <string name="noteHint">Type your note here!</string>
     <string name="isPrivate">Private?</string>
     <string name="submit">Submit!</string>
+
     <string name="addPictures">+ Pictures</string>
     <string name="addVideos">+ Videos</string>
+
+    <string name="search">Search</string>
+    <string name="noteSearchBar">Type the id here.</string>
+    <string name="noteSearchInfo">Find a note by ID</string>
+
+    <string name ="invalidID">Invalid ID</string>
 </resources>

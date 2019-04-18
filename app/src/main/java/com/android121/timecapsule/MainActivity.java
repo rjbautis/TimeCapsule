@@ -8,12 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     Button submitNoteButton;
     CheckBox isNotePrivate;
     FirebaseFirestore db;
+    EditText searchText;
+    TextView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         submitNoteButton = (Button) findViewById(R.id.submitNoteButton);
         isNotePrivate = (CheckBox) findViewById(R.id.isNotePrivate);
         db = FirebaseFirestore.getInstance();
+        searchText = (EditText) findViewById(R.id.noteSearchBar);
+        searchView = (TextView) findViewById(R.id.noteSearchView);
 
     }
 
@@ -95,6 +107,37 @@ public class MainActivity extends AppCompatActivity {
         // Show toast message to confirm submission
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, R.string.noteSubmitted, Toast.LENGTH_SHORT).show();
+
+    }
+
+    // Find the content of a note given a contribution ID and display it
+    void findNote(View v){
+        String searchID = "";
+        if(searchText.getText() != null && !searchText.getText().toString().equals("")){
+            searchID = searchText.getText().toString();
+            DocumentReference docRef = db.collection("contributions").document(searchID);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(MainActivity.class.getSimpleName(), "DocumentSnapshot data: " + document.getData());
+                            Log.d(MainActivity.class.getSimpleName(), "CONTENT: "+ document.get("content"));
+                            searchView.setText(document.get("content").toString());
+                        } else {
+                            Log.d(MainActivity.class.getSimpleName(), "No such document");
+                            searchView.setText(R.string.invalidID);
+                        }
+                    } else {
+                        Log.d(MainActivity.class.getSimpleName(), "get failed with ", task.getException());
+                    }
+                }
+            });
+        } else {
+            searchView.setText(R.string.invalidID);
+        }
+
 
     }
 }

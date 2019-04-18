@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/isNotePrivate"
             android:text="@string/isPrivate"
+            android:textSize="24sp"
             android:visibility="gone"
             />
 
@@ -69,6 +70,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/addVideos"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/noteSearchInfo"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noteSearchBar"
+        android:hint="@string/noteSearchBar"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noteSearchButton"
+        android:text="@string/search"
+        android:onClick="findNote"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noteSearchView"
         />
 
 </LinearLayout>
