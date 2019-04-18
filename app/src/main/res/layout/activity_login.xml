@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+                android:id="@+id/imageView"
+                android:contentDescription="Logo"/>
+
+        <EditText
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/email_field"
+                android:hint="@string/email_hint"/>
+
+        <EditText
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/password_field"
+                android:hint="@string/password_hint"/>
+
+        <LinearLayout
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+            <Button
+                    android:text="@string/sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sign_up_btn"
+                    style="@android:style/Widget.Material.Button"
+                    android:layout_weight="1"/>
+
+            <Button
+                    android:text="@string/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_btn"
+                    style="@android:style/Widget.Material.Button"
+                    android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <Button
+                android:text="@string/google_sign_in"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/google_sign_in_btn"
+                style="@android:style/Widget.Material.Button.Colored"
+                android:background="@color/colorRed"/>
+    </LinearLayout>
+</ScrollView>
