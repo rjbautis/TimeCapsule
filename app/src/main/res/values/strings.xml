@@ -8,6 +8,10 @@
     <string name="login">Login</string>
     <string name="google_sign_in">Sign In With Google</string>
 
+    <!-- SignUpActivity -->
+    <string name="name_hint">Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+
     <!-- ContributeActivity -->
     <string name="noteSubmitted">Note submitted!</string>
     <string name="contribute">Contribute</string>
@@ -23,5 +27,5 @@
     <string name="noteSearchBar">Type the id here.</string>
     <string name="noteSearchInfo">Find a note by ID</string>
 
-    <string name ="invalidID">Invalid ID</string>
+    <string name="invalidID">Invalid ID</string>
 </resources>
