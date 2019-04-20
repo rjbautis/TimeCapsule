@@ -54,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
         String password = mPasswordEditText.getText().toString();
         String confirmPassword = mConfirmPasswordEditText.getText().toString();
 
+        // Validate the edit text fields every time the focus is moved away from those fields
         switch (v.getId()) {
             case R.id.nameEditText:
                 if (!hasFocus) {
@@ -117,8 +118,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
 
         String email = mNewEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-
-        System.out.println(email + " " + password);
 
         mProgressBar.setVisibility(View.VISIBLE);
 

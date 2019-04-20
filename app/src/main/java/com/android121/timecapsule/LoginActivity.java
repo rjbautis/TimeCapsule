@@ -117,9 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                 login(email, password);
                 break;
             case R.id.signUpBtn:
+                // Launch the sign up activity
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
-//                signUp(email, password);
                 break;
             case R.id.googleSignInBtn:
                 mProgressBar.setVisibility(View.VISIBLE);
