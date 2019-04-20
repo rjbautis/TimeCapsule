@@ -45,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase auth object
         mAuth = FirebaseAuth.getInstance();
 
-        mEmailEditText = findViewById(R.id.email_field);
-        mPasswordEditText = findViewById(R.id.password_field);
+        mEmailEditText = findViewById(R.id.emailEditText);
+        mPasswordEditText = findViewById(R.id.passwordEditText);
         mProgressBar = findViewById(R.id.progressBar);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -103,26 +103,31 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-        if (!isValidEmail(email) && view.getId() != R.id.google_sign_in_btn) {
-            mEmailEditText.setError("Please enter a valid email address.");
-            return;
-        }
-
-        mProgressBar.setVisibility(View.VISIBLE);
-
         // Determine which function to call based on the button clicked
         switch (view.getId()) {
-            case R.id.login_btn:
+            case R.id.loginBtn:
+
+                if (!isValidEmail(email)) {
+                    mEmailEditText.setError("Please enter a valid email address.");
+                    return;
+                }
+
+                mProgressBar.setVisibility(View.VISIBLE);
+
                 login(email, password);
                 break;
-            case R.id.sign_up_btn:
-                signUp(email, password);
+            case R.id.signUpBtn:
+                // Launch the sign up activity
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.google_sign_in_btn:
+            case R.id.googleSignInBtn:
+                mProgressBar.setVisibility(View.VISIBLE);
+
                 signInWithGoogle();
                 break;
             default:
-                Log.e(LoginActivity.class.getSimpleName(), "Fatal Error. Shouldn't be able to reach this");
+                Log.e(TAG, "Fatal Error. Shouldn't be able to reach this");
                 break;
         }
     }
@@ -136,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(LoginActivity.class.getSimpleName(), "signInWithEmailAndPassword: success");
+                            Log.d(TAG, "signInWithEmailAndPassword: success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "Successfully logged in!",
@@ -146,40 +151,11 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Log.d(LoginActivity.class.getSimpleName(), "signInWithEmailAndPassword: failed");
+                            Log.d(TAG, "signInWithEmailAndPassword: failed");
 
                             mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Authentication failed",
                                     Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-
-    /**
-     * Sign up by authenticating with Firebase Authentication table
-     */
-    private void signUp(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(LoginActivity.class.getSimpleName(), "createUserWithEmailAndPassword: success");
-
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(LoginActivity.this, "Successfully signed up!",
-                                    Toast.LENGTH_LONG).show();
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Log.d(LoginActivity.class.getSimpleName(), "createUserWithEmailAndPassword: failed");
-
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(LoginActivity.this, "Sign up failed. This email might have " +
-                                    "an existing account signed up already.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
