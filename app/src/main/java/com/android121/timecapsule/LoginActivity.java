@@ -15,12 +15,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 100;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
@@ -42,8 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase auth object
+        // Initialize Firebase auth object and Firestore
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         mEmailEditText = findViewById(R.id.emailEditText);
         mPasswordEditText = findViewById(R.id.passwordEditText);
@@ -143,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmailAndPassword: success");
 
-                            FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "Successfully logged in!",
                                     Toast.LENGTH_LONG).show();
 
@@ -179,7 +183,28 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential: success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+                            if (firebaseUser != null) {
+                                User user = new User(
+                                        firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
+
+                                // Add or replace user in the users collection in the database
+                                db.collection("users").document(user.userId)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "User successfully added to database!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e(TAG, "Error writing document", e);
+                                            }
+                                        });
+                            }
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
