@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Toggles visibility of the note fields when the notes button is clicked
-    void showNoteText(View v) {
+    public void showNoteText(View v) {
 
         // Toggle visibility of the fields
         if(noteText.getVisibility() == EditText.VISIBLE){
@@ -69,19 +69,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Posts note to database and collapses fields
-    void submitNote(View V){
+    public void submitNote(View V){
 
         // Get text from editText
         String note = noteText.getText().toString();
 
         // Create Document to enter into database
-        Map<String, Object> contribution = new HashMap<>();
-
-        contribution.put("content", note);
-        contribution.put("capsuleID", "");
-        contribution.put("contributionID", "");
-        contribution.put("isPublic", !isNotePrivate.isChecked());
-        contribution.put("userID", "");
+        Contribution contribution = new Contribution(note, "", "", !isNotePrivate.isChecked(), "");
 
         // Insert document into contributions table
         db.collection("contributions")
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Find the content of a note given a contribution ID and display it
-    void findNote(View v){
+    public void findNote(View v){
         String searchID = "";
         if(searchText.getText() != null && !searchText.getText().toString().equals("")){
             searchID = searchText.getText().toString();
