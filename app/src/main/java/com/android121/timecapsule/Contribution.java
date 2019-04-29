@@ -1,17 +1,17 @@
 package com.android121.timecapsule;
 
 class Contribution {
-    String content;
-    String capsuleID;
-    String contributionID;
-    Boolean isPublic;
-    String userID;
+    String mContent;
+    String mCapsuleId;
+    String mContributionId;
+    Boolean mIsPublic;
+    String mUserId;
 
-    Contribution(String content, String capsuleID, String contributionID, Boolean isPublic, String userID) {
-        this.content = content;
-        this.capsuleID = capsuleID;
-        this.contributionID = contributionID;
-        this.isPublic = isPublic;
-        this.userID = userID;
+    Contribution(String content, String capsuleId, String contributionId, Boolean isPublic, String userId) {
+        this.mContent = content;
+        this.mCapsuleId = capsuleId;
+        this.mContributionId = contributionId;
+        this.mIsPublic = isPublic;
+        this.mUserId = userId;
     }
 }

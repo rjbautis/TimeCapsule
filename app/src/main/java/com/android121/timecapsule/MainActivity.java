@@ -28,28 +28,30 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    // initialize
-    EditText noteText;
-    Button submitNoteButton;
-    CheckBox isNotePrivate;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    EditText mNoteText;
+    Button mSubmitNoteButton;
+    CheckBox mIsNotePrivate;
+    EditText mSearchText;
+    TextView mSearchView;
+
     FirebaseFirestore db;
-    EditText searchText;
-    TextView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle(R.string.contribute);
+        setTitle(R.string.contribute_contribute);
 
         // Get references
-        noteText = (EditText) findViewById(R.id.noteText);
-        submitNoteButton = (Button) findViewById(R.id.submitNoteButton);
-        isNotePrivate = (CheckBox) findViewById(R.id.isNotePrivate);
+        mNoteText = (EditText) findViewById(R.id.edit_text_note);
+        mSubmitNoteButton = (Button) findViewById(R.id.button_submit_note);
+        mIsNotePrivate = (CheckBox) findViewById(R.id.is_note_private);
         db = FirebaseFirestore.getInstance();
-        searchText = (EditText) findViewById(R.id.noteSearchBar);
-        searchView = (TextView) findViewById(R.id.noteSearchView);
+        mSearchText = (EditText) findViewById(R.id.edit_text_note_search_bar);
+        mSearchView = (TextView) findViewById(R.id.text_note_search_view);
 
     }
 
@@ -57,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
     public void showNoteText(View v) {
 
         // Toggle visibility of the fields
-        if(noteText.getVisibility() == EditText.VISIBLE){
-            noteText.setVisibility(EditText.GONE);
-            submitNoteButton.setVisibility(Button.GONE);
-            isNotePrivate.setVisibility(CheckBox.GONE);
+        if(mNoteText.getVisibility() == EditText.VISIBLE){
+            mNoteText.setVisibility(EditText.GONE);
+            mSubmitNoteButton.setVisibility(Button.GONE);
+            mIsNotePrivate.setVisibility(CheckBox.GONE);
         } else {
-            noteText.setVisibility(EditText.VISIBLE);
-            submitNoteButton.setVisibility(Button.VISIBLE);
-            isNotePrivate.setVisibility(CheckBox.VISIBLE);
+            mNoteText.setVisibility(EditText.VISIBLE);
+            mSubmitNoteButton.setVisibility(Button.VISIBLE);
+            mIsNotePrivate.setVisibility(CheckBox.VISIBLE);
         }
     }
 
@@ -72,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
     public void submitNote(View V){
 
         // Get text from editText
-        String note = noteText.getText().toString();
+        String note = mNoteText.getText().toString();
 
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, "", "", !isNotePrivate.isChecked(), "");
+        Contribution contribution = new Contribution(note, "", "", !mIsNotePrivate.isChecked(), "");
 
         // Insert document into contributions table
         db.collection("contributions")
@@ -83,53 +85,53 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(MainActivity.class.getSimpleName(), "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(MainActivity.class.getSimpleName(), "Error adding document", e);
+                        Log.w(TAG, "Error adding document", e);
                     }
                 });
 
         // Collapse fields
-        noteText.setVisibility(EditText.GONE);
-        submitNoteButton.setVisibility(Button.GONE);
-        isNotePrivate.setVisibility(CheckBox.GONE);
+        mNoteText.setVisibility(EditText.GONE);
+        mSubmitNoteButton.setVisibility(Button.GONE);
+        mIsNotePrivate.setVisibility(CheckBox.GONE);
 
         // Show toast message to confirm submission
         Toast noteSubmittedToast = new Toast(this);
-        noteSubmittedToast.makeText(this, R.string.noteSubmitted, Toast.LENGTH_SHORT).show();
+        noteSubmittedToast.makeText(this, R.string.contribute_note_submitted, Toast.LENGTH_SHORT).show();
 
     }
 
     // Find the content of a note given a contribution ID and display it
     public void findNote(View v){
-        String searchID = "";
-        if(searchText.getText() != null && !searchText.getText().toString().equals("")){
-            searchID = searchText.getText().toString();
-            DocumentReference docRef = db.collection("contributions").document(searchID);
+        String searchId = "";
+        if(mSearchText.getText() != null && !mSearchText.getText().toString().equals("")){
+            searchId = mSearchText.getText().toString();
+            DocumentReference docRef = db.collection("contributions").document(searchId);
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d(MainActivity.class.getSimpleName(), "DocumentSnapshot data: " + document.getData());
-                            Log.d(MainActivity.class.getSimpleName(), "CONTENT: "+ document.get("content"));
-                            searchView.setText(document.get("content").toString());
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            Log.d(TAG, "CONTENT: "+ document.get("content"));
+                            mSearchView.setText(document.get("content").toString());
                         } else {
-                            Log.d(MainActivity.class.getSimpleName(), "No such document");
-                            searchView.setText(R.string.invalidID);
+                            Log.d(TAG, "No such document");
+                            mSearchView.setText(R.string.contribute_invalid_id);
                         }
                     } else {
-                        Log.d(MainActivity.class.getSimpleName(), "get failed with ", task.getException());
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
                 }
             });
         } else {
-            searchView.setText(R.string.invalidID);
+            mSearchView.setText(R.string.contribute_invalid_id);
         }
 
 
