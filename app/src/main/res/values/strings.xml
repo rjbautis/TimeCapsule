@@ -28,4 +28,8 @@
     <string name="contribute_note_search_info">Find a note by ID</string>
 
     <string name="contribute_invalid_id">Invalid ID</string>
+
+
+    <!-- CreateCapsuleActivity -->
+    <string name="create_create">Create Capsule</string>
 </resources>
