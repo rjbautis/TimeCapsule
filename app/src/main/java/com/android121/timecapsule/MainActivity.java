@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox mIsNotePrivate;
     EditText mSearchText;
     TextView mSearchView;
+    String mCapsuleId;
 
     FirebaseFirestore db;
 
@@ -47,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle(R.string.contribute_contribute);
+
+        // Get capsule id from bundle
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            mCapsuleId = extras.getString("capsuleId");
+            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+        }
 
         // Get references
         mNoteText = (EditText) findViewById(R.id.edit_text_note);
@@ -88,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         String note = mNoteText.getText().toString();
 
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, "", "", !mIsNotePrivate.isChecked(), "");
+        Contribution contribution = new Contribution(note, "", !mIsNotePrivate.isChecked(), "");
 
         // Insert document into contributions table
         db.collection("contributions")
