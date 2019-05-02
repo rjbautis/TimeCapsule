@@ -14,18 +14,26 @@ public class HomeActivity extends AppCompatActivity {
     public static ImageButton gotoView;
     public static ImageButton gotoEdit;
     public static ImageButton gotoSettings;
+    public static Button logOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Building
         gotoAdd = (ImageButton) findViewById(R.id.capsuleAdd);
         gotoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
+            }
+        });
+
+        logOut = (Button) findViewById(R.id.logOut);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
         });
     }

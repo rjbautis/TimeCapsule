@@ -7,6 +7,22 @@
     android:background="#ffffff"
     tools:context=".HomeActivity">
 
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="114dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#DAA520"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/capsuleAddTEXT"
         android:layout_width="170dp"

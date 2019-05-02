@@ -20,21 +20,14 @@
 
 </android.support.constraint.ConstraintLayout> -->
 
-<LinearLayout
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contribute_add_notes"
-        android:id="@+id/button_add_notes"
-        android:onClick="showNoteText"
-        />
-
-        <EditText
+    <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_text_note"
@@ -59,6 +52,13 @@
             android:visibility="gone"
             android:onClick="submitNote"
             />
+
+    <Button
+        android:id="@+id/button_add_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="showNoteText"
+        android:text="@string/contribute_add_notes" />
 
     <Button
         android:layout_width="match_parent"
@@ -98,5 +98,27 @@
         android:layout_height="wrap_content"
         android:id="@+id/text_note_search_view"
         />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="275dp">
+
+        <Button
+            android:id="@+id/logOut"
+            android:layout_width="114dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#DAA520"
+            android:text="Log Out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.979" />
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
