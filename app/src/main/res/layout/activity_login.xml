@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         tools:context=".LoginActivity">
 
     <LinearLayout
@@ -77,12 +78,12 @@
                 android:visibility="invisible"/>
 
         <Button
-                android:text="@string/google_sign_in"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/googleSignInBtn"
-                style="@android:style/Widget.Material.Button.Colored"
-                android:background="@color/colorRed"
-                android:onClick="onClick"/>
+            android:id="@+id/googleSignInBtn"
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRed"
+            android:onClick="onClick"
+            android:text="@string/google_sign_in" />
     </LinearLayout>
 </ScrollView>
