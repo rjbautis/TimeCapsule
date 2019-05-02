@@ -2,7 +2,7 @@ package com.android121.timecapsule;
 
 import java.util.Date;
 
-public class Capsule {
+class Capsule {
     Date mDateCreated;    // Change to date data type?
     String mOpenDate;       // Change to date data type?
     String mRecipientId;

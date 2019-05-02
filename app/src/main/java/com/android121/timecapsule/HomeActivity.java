@@ -9,27 +9,27 @@ import android.widget.ImageButton;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static ImageButton gotoAdd;
-    public static ImageButton gotoView;
-    public static ImageButton gotoEdit;
-    public static ImageButton gotoSettings;
-    public static Button logOut;
+    private ImageButton mGotoAdd;
+    private ImageButton mGotoView;
+    private ImageButton mGotoEdit;
+    private ImageButton mGotoSettings;
+    private Button mLogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        gotoAdd = (ImageButton) findViewById(R.id.capsuleAdd);
-        gotoAdd.setOnClickListener(new View.OnClickListener() {
+        mGotoAdd = (ImageButton) findViewById(R.id.capsuleAdd);
+        mGotoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, ContributeActivity.class));
             }
         });
 
-        logOut = (Button) findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
+        mLogOut = (Button) findViewById(R.id.logOut);
+        mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));

@@ -36,13 +36,13 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     private TextView dateView;
     private int year, month, day;
 
-    Button mInviteFriendsButton;
-    Button mCreateCapsuleButton;
-    EditText mRecipientEditText;
-    EditText mOpenDateEditText;
-    EditText mInviteFriendEditText;
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
+    private Button mInviteFriendsButton;
+    private Button mCreateCapsuleButton;
+    private EditText mRecipientEditText;
+    private EditText mOpenDateEditText;
+    private EditText mInviteFriendEditText;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

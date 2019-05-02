@@ -1,6 +1,6 @@
 package com.android121.timecapsule;
 
-public class Invitation {
+class Invitation {
     String mCapsuleId;
     String mUserId;
     String mSenderId;

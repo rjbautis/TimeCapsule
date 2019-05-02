@@ -24,15 +24,15 @@ public class ContributeActivity extends AppCompatActivity {
 
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
-    public static Button logOut;
-    EditText mNoteText;
-    Button mSubmitNoteButton;
-    CheckBox mIsNotePrivate;
-    EditText mSearchText;
-    TextView mSearchView;
-    String mCapsuleId;
+    private Button mLogOut;
+    private EditText mNoteText;
+    private Button mSubmitNoteButton;
+    private CheckBox mIsNotePrivate;
+    private EditText mSearchText;
+    private TextView mSearchView;
+    private String mCapsuleId;
 
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,8 @@ public class ContributeActivity extends AppCompatActivity {
         mSearchText = (EditText) findViewById(R.id.edit_text_note_search_bar);
         mSearchView = (TextView) findViewById(R.id.text_note_search_view);
 
-        logOut = (Button) findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
+        mLogOut = (Button) findViewById(R.id.logOut);
+        mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ContributeActivity.this, LoginActivity.class));
