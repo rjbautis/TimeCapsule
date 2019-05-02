@@ -1,5 +1,6 @@
 package com.android121.timecapsule;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             Log.d(TAG, "Firebase user authenticated already");
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
@@ -151,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Successfully logged in!",
                                     Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
@@ -206,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                                         });
                             }
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
