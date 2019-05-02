@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Time Capsule</string>
+
+    <!-- LoginActivity -->
+    <string name="password_hint">Password</string>
+    <string name="email_hint">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="google_sign_in">Sign In With Google</string>
+
+    <!-- SignUpActivity -->
+    <string name="name_hint">Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+
+    <!-- ContributeActivity -->
+    <string name="contribute_note_submitted">Note submitted!</string>
+    <string name="contribute_contribute">Contribute</string>
+    <string name="contribute_add_notes">+ Notes</string>
+    <string name="contribute_note_hint">Type your note here!</string>
+    <string name="contribute_is_private">Private?</string>
+    <string name="contribute_submit">Submit!</string>
+
+    <string name="contribute_add_pictures">+ Pictures</string>
+    <string name="contribute_add_videos">+ Videos</string>
+
+    <string name="contribute_search">Search</string>
+    <string name="contribute_note_search_bar">Type the id here.</string>
+    <string name="contribute_note_search_info">Find a note by ID</string>
+
+    <string name="contribute_invalid_id">Invalid ID</string>
+</resources>
