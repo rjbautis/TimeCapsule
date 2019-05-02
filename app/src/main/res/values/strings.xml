@@ -32,4 +32,5 @@
 
     <!-- CreateCapsuleActivity -->
     <string name="create_create">Create Capsule</string>
+    <string name="create_invite_friends">Invite friend</string>
 </resources>

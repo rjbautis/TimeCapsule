@@ -187,10 +187,10 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (firebaseUser != null) {
                                 User user = new User(
-                                        firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
+                                        firebaseUser.getDisplayName(), firebaseUser.getEmail());
 
                                 // Add or replace user in the users collection in the database
-                                db.collection("users").document(user.userId)
+                                db.collection("users").document(firebaseUser.getUid())
                                         .set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
