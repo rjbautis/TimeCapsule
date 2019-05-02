@@ -148,7 +148,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
                             Toast.makeText(SignUpActivity.this, "Successfully signed up!",
                                     Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SignUpActivity.this, ContributeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.DocumentTransform;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -158,7 +156,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                         // TODO: Finish this intent to change screens
                                         //      Pass capsule ID
                                         // Create intent to go to contribute page
-                                        Intent intent = new Intent(CreateCapsuleActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(CreateCapsuleActivity.this, ContributeActivity.class);
                                         intent.putExtra("capsuleId", documentReference.getId());
                                         startActivity(intent);
 
