@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/box2" />
 
     <ImageButton
-        android:id="@+id/capsuleEdit"
+        android:id="@+id/capsuleOpen"
         android:layout_width="172dp"
         android:layout_height="170dp"
         android:layout_marginStart="8dp"
@@ -151,7 +151,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="28dp"
-        android:text="Edit your capsules!"
+        android:text="Open your capsule!"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -183,7 +183,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="View your capsule history!"
+        android:text="View/Edit your capsule history!"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
