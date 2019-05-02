@@ -37,10 +37,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/capsuleHistoryTEXT"
-        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.521" />
 
     <ImageButton
         android:id="@+id/capsuleHistory"
@@ -74,7 +74,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851"
+        app:layout_constraintVertical_bias="0.82"
         app:srcCompat="@drawable/box4" />
 
     <ImageButton
@@ -138,26 +138,26 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintHorizontal_bias="0.968"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851"
+        app:layout_constraintVertical_bias="0.82"
         app:srcCompat="@drawable/box3" />
 
     <TextView
         android:id="@+id/capsuleEditTEXT"
-        android:layout_width="174dp"
-        android:layout_height="58dp"
+        android:layout_width="197dp"
+        android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="44dp"
         android:text="Open your capsule!"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/capsuleSettingsTEXT"
-        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -166,7 +166,7 @@
         android:layout_height="58dp"
         android:layout_marginStart="220dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="44dp"
         android:text="Capsule Settings"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -189,9 +189,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintHorizontal_bias="0.968"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.521" />
 
 </android.support.constraint.ConstraintLayout>
