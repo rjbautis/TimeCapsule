@@ -68,15 +68,6 @@
 
         </LinearLayout>
 
-        <ProgressBar
-                style="@android:style/Widget.Material.ProgressBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="invisible"/>
-
         <Button
             android:id="@+id/googleSignInBtn"
             style="@android:style/Widget.Material.Button.Colored"
@@ -85,5 +76,14 @@
             android:background="@color/colorRed"
             android:onClick="onClick"
             android:text="@string/google_sign_in" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.Material.ProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="invisible" />
     </LinearLayout>
 </ScrollView>
