@@ -9,16 +9,25 @@
         android:roundIcon="@mipmap/logo_word"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".CreateCapsuleActivity"></activity>
-        <activity android:name=".ContributeActivity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".ViewActivity"
+            android:label="@string/title_activity_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".HomeActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
+
+        <activity android:name=".CreateCapsuleActivity" />
+        <activity android:name=".ContributeActivity" />
+        <activity android:name=".LoginActivity">
+
+        </activity>
+        <activity android:name=".SignUpActivity" />
     </application>
 
 </manifest>
