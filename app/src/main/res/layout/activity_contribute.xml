@@ -20,105 +20,138 @@
 
 </android.support.constraint.ConstraintLayout> -->
 
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_text_note"
-            android:visibility="gone"
-            android:hint="@string/contribute_note_hint"
-            />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/is_note_private"
-            android:text="@string/contribute_is_private"
-            android:textSize="24sp"
-            android:visibility="gone"
-            />
+            android:orientation="vertical">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_submit_note"
-            android:text="@string/contribute_submit"
-            android:visibility="gone"
-            android:onClick="submitNote"
-            />
+                android:id="@+id/button_add_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="showNoteText"
+                android:text="@string/contribute_add_notes" />
 
-    <Button
-        android:id="@+id/button_add_notes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="showNoteText"
-        android:text="@string/contribute_add_notes" />
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_text_note"
+                    android:visibility="gone"
+                    android:hint="@string/contribute_note_hint"
+                    />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contribute_add_pictures"
-        />
+            <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/is_note_private"
+                    android:text="@string/contribute_is_private"
+                    android:textSize="24sp"
+                    android:visibility="gone"
+                    />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contribute_add_videos"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contribute_note_search_info"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_text_note_search_bar"
-        android:hint="@string/contribute_note_search_bar"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_note_search"
-        android:text="@string/contribute_search"
-        android:onClick="findNote"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_note_search_view"
-        />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="275dp">
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_submit_note"
+                    android:text="@string/contribute_submit"
+                    android:visibility="gone"
+                    android:onClick="submitNote"
+                    />
 
         <Button
-            android:id="@+id/logOut"
-            android:layout_width="114dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#DAA520"
-            android:text="Log Out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.979" />
-    </android.support.constraint.ConstraintLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="showPictureFields"
+                android:text="@string/contribute_add_pictures"
+                />
 
-</LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_picture_hint"
+                    android:id="@+id/choose_picture_hint_text"
+                    android:visibility="gone"
+                    />
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:id="@+id/picture_view"
+                    android:layout_margin="15dp"
+                    android:onClick="choosePicture"
+                    android:visibility="gone"/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="Submit"
+                    android:onClick="submitPicture"
+                    android:id="@+id/test123"/>
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contribute_add_videos"
+                />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contribute_note_search_info"
+                />
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_text_note_search_bar"
+                android:hint="@string/contribute_note_search_bar"
+                />
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_note_search"
+                android:text="@string/contribute_search"
+                android:onClick="findNote"
+                />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_note_search_view"
+                />
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteY="275dp">
+
+            <Button
+                    android:id="@+id/logOut"
+                    android:layout_width="114dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#DAA520"
+                    android:text="Log Out"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.979" />
+        </android.support.constraint.ConstraintLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     private ImageButton mGotoAdd;
     private ImageButton mGotoView;
@@ -20,8 +23,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mAuth = FirebaseAuth.getInstance();
+
         mGotoAdd = (ImageButton) findViewById(R.id.capsuleAdd);
         mGotoAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, CreateCapsuleActivity.class));
+            }
+        });
+
+        mGotoEdit = findViewById(R.id.capsuleHistory);
+        mGotoEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, ContributeActivity.class));
@@ -32,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAuth.signOut();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
         });

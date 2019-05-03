@@ -27,6 +27,8 @@
     <string name="contribute_note_search_bar">Type the id here.</string>
     <string name="contribute_note_search_info">Find a note by ID</string>
 
+    <string name="choose_picture_hint">Tap below to select a picture!</string>
+
     <string name="contribute_invalid_id">Invalid ID</string>
 
 
