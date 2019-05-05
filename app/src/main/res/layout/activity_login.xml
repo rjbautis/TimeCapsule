@@ -49,33 +49,37 @@
                 android:gravity="center">
 
             <Button
-                    android:text="@string/sign_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/signUpBtn"
-                    style="@android:style/Widget.Material.Button"
-                    android:layout_weight="1"
-                    android:onClick="onClick"/>
+                android:id="@+id/signUpBtn"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="@string/sign_up"
+                android:textSize="18sp" />
 
             <Button
-                    android:text="@string/login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/loginBtn"
-                    style="@android:style/Widget.Material.Button"
-                    android:layout_weight="1"
-                    android:onClick="onClick"/>
+                android:id="@+id/loginBtn"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="@string/login"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/googleSignInBtn"
             style="@android:style/Widget.Material.Button.Colored"
-            android:layout_width="match_parent"
+            android:layout_width="383dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@color/colorRed"
             android:onClick="onClick"
-            android:text="@string/google_sign_in" />
+            android:text="@string/google_sign_in"
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -85,5 +89,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:visibility="invisible" />
+
     </LinearLayout>
 </ScrollView>
