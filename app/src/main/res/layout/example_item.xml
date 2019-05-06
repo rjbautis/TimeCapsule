@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:layout_margin = "4dp"
+
+        >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/imageView"/>
+
+        <TextView
+            android:id="@+id/capsule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="Capsule1"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/capsule"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_toEndOf="@+id/imageView"
+            android:textSize="15sp"
+            android:text="Date1"
+            />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

@@ -41,6 +41,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        mGotoView = findViewById(R.id.capsuleHistory);
+        mGotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, EditActivity.class));
+            }
+        });
+
         mLogOut = (Button) findViewById(R.id.logOut);
         mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
