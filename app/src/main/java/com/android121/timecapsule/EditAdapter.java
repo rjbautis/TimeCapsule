@@ -12,22 +12,22 @@ import java.util.ArrayList;
 
 public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHolder> {
 
-    private ArrayList<ExampleItem> mExampleList;
+    private ArrayList<EditItem> mExampleList;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder{
         public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
+        public TextView mCapsuleName;
+        public TextView mOpenDate;
 
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.capsule);
-            mTextView2 = itemView.findViewById(R.id.date);
+            mCapsuleName = itemView.findViewById(R.id.capsule_name);
+            mOpenDate = itemView.findViewById(R.id.open_date);
         }
     }
 
-    public EditAdapter(ArrayList<ExampleItem> exampleList) {
+    public EditAdapter(ArrayList<EditItem> exampleList) {
         mExampleList = exampleList;
     }
 
@@ -35,17 +35,16 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHol
     @Override
     public EditAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.example_item, viewGroup, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v);
-        return evh;
+        return new ExampleViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EditAdapter.ExampleViewHolder exampleViewHolder, int position) {
-        ExampleItem currentItem = mExampleList.get(position);
+        EditItem currentItem = mExampleList.get(position);
 
-        exampleViewHolder.mImageView.setImageResource(currentItem.getmImageResource());
-        exampleViewHolder.mTextView1.setText(currentItem.getText1());
-        exampleViewHolder.mTextView2.setText(currentItem.getText2());
+        exampleViewHolder.mImageView.setImageResource(currentItem.getImageResource());
+        exampleViewHolder.mCapsuleName.setText(currentItem.getCapsuleName());
+        exampleViewHolder.mOpenDate.setText(currentItem.getOpenDate());
     }
 
     @Override

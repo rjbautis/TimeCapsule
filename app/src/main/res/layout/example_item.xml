@@ -23,7 +23,7 @@
             android:id="@+id/imageView"/>
 
         <TextView
-            android:id="@+id/capsule"
+            android:id="@+id/capsule_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -31,20 +31,18 @@
             android:layout_marginTop="2dp"
             android:layout_toEndOf="@+id/imageView"
             android:textSize="25sp"
-            android:textStyle="bold"
-            android:text="Capsule1"/>
+            android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/open_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/capsule"
+            android:layout_below="@+id/capsule_name"
             android:layout_marginStart="0dp"
             android:layout_marginTop="2dp"
 
             android:layout_toEndOf="@+id/imageView"
             android:textSize="15sp"
-            android:text="Date1"
             />
 
     </RelativeLayout>
