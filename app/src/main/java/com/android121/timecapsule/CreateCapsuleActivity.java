@@ -141,7 +141,6 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                         final String recipientId = recipientDocument.getString("userId");
 
                         // Create Document to enter into database
-                        // TODO: get IDs and date created.
                         Date currentTime = Calendar.getInstance().getTime();
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                         Date openDate = Calendar.getInstance().getTime();

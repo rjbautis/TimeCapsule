@@ -10,29 +10,26 @@
         android:id="@+id/button_invite_friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="8dp"
         android:onClick="inviteFriends"
         android:text="@string/create_invite_friends"
-        app:layout_constraintBottom_toTopOf="@+id/button_create_capsule"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_recipient" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_invite_address" />
 
     <Button
         android:id="@+id/button_create_capsule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="134dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
         android:onClick="createCapsule"
         android:text="Create Capsule!"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_invite_friends" />
 
@@ -40,22 +37,26 @@
         android:id="@+id/edit_text_recipient"
         android:layout_width="160dp"
         android:layout_height="52dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_recipent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_recipent"
         android:layout_width="96dp"
         android:layout_height="50dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
         android:text="Recipient:"
         app:layout_constraintEnd_toStartOf="@+id/edit_text_recipient"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,67 +64,60 @@
         android:id="@+id/text_open_date"
         android:layout_width="91dp"
         android:layout_height="56dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginBottom="123dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:text="Open Date:"
-        app:layout_constraintBottom_toTopOf="@+id/button_invite_friends"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_open_date_field"
         app:layout_constraintTop_toBottomOf="@+id/text_recipent" />
 
     <TextView
         android:id="@+id/text_friend_address"
-        android:layout_width="96dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="104dp"
         android:text="E-mail Address:"
-        app:layout_constraintBottom_toTopOf="@+id/button_invite_friends"
-        app:layout_constraintEnd_toStartOf="@+id/edit_text_invite_address"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_open_date_field" />
+        app:layout_constraintTop_toBottomOf="@+id/text_open_date" />
 
     <EditText
         android:id="@+id/edit_text_invite_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/button_invite_friends"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_friend_address" />
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_choose_date" />
 
     <Button
         android:id="@+id/button_choose_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="194dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:onClick="setDate"
         android:text="Choose Date"
-        app:layout_constraintBottom_toTopOf="@+id/edit_text_invite_address"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_recipient"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_open_date_field" />
 
     <TextView
         android:id="@+id/text_open_date_field"
         android:layout_width="162dp"
         android:layout_height="53dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/edit_text_invite_address"
-        app:layout_constraintEnd_toStartOf="@+id/button_choose_date"
-        app:layout_constraintStart_toEndOf="@+id/text_open_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_recipient" />
 
 
