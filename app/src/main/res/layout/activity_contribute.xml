@@ -151,6 +151,12 @@
                     app:layout_constraintVertical_bias="0.979" />
         </android.support.constraint.ConstraintLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Finish"
+            android:onClick="finishContributing"/>
+
 
     </LinearLayout>
 

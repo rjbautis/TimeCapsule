@@ -78,6 +78,8 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         //      Check for pre-existing invitation
         //      Make sure email address is a valid user.
 
+        // TODO: FIX BUG WHERE EMPTY RECIPIENT CRASHES
+
         String userId = mInviteFriendEditText.getText().toString();
         String senderId;
 

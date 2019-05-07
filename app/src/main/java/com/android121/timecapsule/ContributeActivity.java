@@ -210,4 +210,9 @@ public class ContributeActivity extends AppCompatActivity {
             firebaseUtil.uploadStorage(file, "nice");
         }
     }
+
+    public void finishContributing(View view){
+        Intent intent = new Intent(ContributeActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

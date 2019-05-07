@@ -3,13 +3,13 @@ package com.android121.timecapsule;
 import java.util.Date;
 
 class Capsule {
-    Date mDateCreated;    // Change to date data type?
-    Date mOpenDate;       // Change to date data type?
-    String mRecipientId;
+    Date dateCreated;
+    Date openDate;
+    String recipientId;
 
     Capsule(Date dateCreated, Date openDate, String recipientId) {
-        this.mDateCreated = dateCreated;
-        this.mOpenDate = openDate;
-        this.mRecipientId = recipientId;
+        this.dateCreated = dateCreated;
+        this.openDate = openDate;
+        this.recipientId = recipientId;
     }
 }
