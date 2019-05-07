@@ -24,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,18 +53,18 @@ public class CreateCapsuleActivity extends AppCompatActivity {
 
         setTitle(R.string.create_create);
 
-        //dateView = (TextView) findViewById(R.id.textView3);
+        dateView = (TextView) findViewById(R.id.text_open_date_field);
         calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
 
+        year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        //showDate(year, month+1, day);
+        showDate(year, month+1, day);
 
         mInviteFriendsButton = (Button) findViewById(R.id.button_invite_friends);
         mCreateCapsuleButton = (Button) findViewById(R.id.button_create_capsule);
         mRecipientEditText = (EditText) findViewById(R.id.edit_text_recipient);
-        mOpenDateEditText = (EditText) findViewById(R.id.edit_text_open_date);
+        //mOpenDateEditText = (EditText) findViewById(R.id.edit_text_open_date);
         mInviteFriendEditText = (EditText) findViewById(R.id.edit_text_invite_address);
 
         db = FirebaseFirestore.getInstance();
@@ -92,19 +94,19 @@ public class CreateCapsuleActivity extends AppCompatActivity {
 
         Invitation invitation = new Invitation(null, userId, senderId);
 
-        // Insert document into contributions table
+        // Insert document into invitations table
         db.collection("invitations")
                 .add(invitation)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Log.d(TAG, "Inviting friend. DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.w(TAG, "Error adding document while trying to invite friend", e);
                     }
                 });
 
@@ -136,21 +138,60 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                         DocumentSnapshot recipientDocument = documentSnapshots.getDocuments()
                                 .get(documentSnapshots.size() -1);
 
-                        String recipientId = recipientDocument.getString("userId");
+                        final String recipientId = recipientDocument.getString("userId");
 
                         // Create Document to enter into database
                         // TODO: get IDs and date created.
                         Date currentTime = Calendar.getInstance().getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                        Date openDate = Calendar.getInstance().getTime();
+                        try {
+                            openDate = sdf.parse(dateView.getText().toString());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
-                        Capsule capsule = new Capsule(currentTime, mOpenDateEditText.getText().toString(), recipientId);
+                        Capsule capsule = new Capsule(currentTime, openDate, recipientId);
 
-                        // Insert document into contributions table
+                        // Insert document into capsules table
                         db.collection("capsules")
                                 .add(capsule)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
-                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        Log.d(TAG, "Created capsule. DocumentSnapshot added with ID: " + documentReference.getId());
+
+                                        // invite creator to contribute
+                                        String senderId;
+
+                                        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                                        if (currentUser != null) {
+                                            Log.d(TAG, "Firebase user authenticated already");
+
+                                            senderId = currentUser.getUid();
+                                        } else {
+                                            Log.d(TAG, "User not logged in!");
+                                            senderId = null;
+                                        }
+
+                                        Invitation invitation = new Invitation(documentReference.getId(), senderId, recipientId);
+
+                                        db.collection("invitations")
+                                                .add(invitation)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        Log.d(TAG, "Invited creator. DocumentSnapshot added with ID: " + documentReference.getId());
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error adding document trying to invite creator", e);
+                                                    }
+                                                });
+
 
 
                                         // TODO: Finish this intent to change screens
@@ -207,14 +248,14 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    //showDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2+1, arg3);
                 }
             };
-/*
+
     private void showDate(int year, int month, int day) {
-        dateView.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
-    }*/
+        dateView.setText(new StringBuilder().append(month).append("/")
+                .append(day).append("/").append(year));
+    }
 
 }
 
