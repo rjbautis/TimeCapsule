@@ -1,13 +1,13 @@
 package com.android121.timecapsule;
 
 class Invitation {
-    String mCapsuleId;
-    String mUserId;
-    String mSenderId;
+    String capsuleId;
+    String userId;
+    String senderId;
 
     Invitation(String capsuleId, String userId, String senderId) {
-        this.mCapsuleId = capsuleId;
-        this.mUserId = userId;
-        this.mSenderId = senderId;
+        this.capsuleId = capsuleId;
+        this.userId = userId;
+        this.senderId = senderId;
     }
 }

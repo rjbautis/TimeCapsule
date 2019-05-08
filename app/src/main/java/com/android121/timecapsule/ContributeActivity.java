@@ -37,14 +37,11 @@ public class ContributeActivity extends AppCompatActivity {
 
     private FirebaseUtil firebaseUtil;
 
-    private Button mLogOut;
 
     // Note
     private EditText mNoteText;
     private Button mNoteSubmitButton;
     private CheckBox mNoteIsPrivate;
-    private EditText mNoteSearchText;
-    private TextView mNoteSearchView;
 
     // Picture
     private TextView mPictureText;
@@ -71,27 +68,17 @@ public class ContributeActivity extends AppCompatActivity {
         firebaseUtil = new FirebaseUtil(this);
 
         db = FirebaseFirestore.getInstance();
-        mLogOut = (Button) findViewById(R.id.logOut);
 
         // Note References
         mNoteText = (EditText) findViewById(R.id.edit_text_note);
         mNoteSubmitButton = (Button) findViewById(R.id.button_submit_note);
         mNoteIsPrivate = (CheckBox) findViewById(R.id.is_note_private);
-        mNoteSearchText = (EditText) findViewById(R.id.edit_text_note_search_bar);
-        mNoteSearchView = (TextView) findViewById(R.id.text_note_search_view);
 
         // Picture References
         mPictureText = findViewById(R.id.choose_picture_hint_text);
         mPicture = findViewById(R.id.picture_view);
         mPictureSubmitButton = findViewById(R.id.test123);
 
-        mLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(ContributeActivity.this, LoginActivity.class));
-            }
-        });
 
     }
 
@@ -156,34 +143,6 @@ public class ContributeActivity extends AppCompatActivity {
 
     }
 
-    // Find the content of a note given a contribution ID and display it
-    public void findNote(View v){
-        String searchId = "";
-        if(mNoteSearchText.getText() != null && !mNoteSearchText.getText().toString().equals("")){
-            searchId = mNoteSearchText.getText().toString();
-            DocumentReference docRef = db.collection("contributions").document(searchId);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            Log.d(TAG, "CONTENT: "+ document.get("content"));
-                            mNoteSearchView.setText(document.get("content").toString());
-                        } else {
-                            Log.d(TAG, "No such document");
-                            mNoteSearchView.setText(R.string.contribute_invalid_id);
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        } else {
-            mNoteSearchView.setText(R.string.contribute_invalid_id);
-        }
-    }
 
     public void showPictureFields(View view) {
         if (mPicture.getVisibility() == View.GONE) {
@@ -209,5 +168,10 @@ public class ContributeActivity extends AppCompatActivity {
         if (file != null) {
             firebaseUtil.uploadStorage(file, "nice");
         }
+    }
+
+    public void finishContributing(View view){
+        Intent intent = new Intent(ContributeActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,15 +1,15 @@
 package com.android121.timecapsule;
 
 class Contribution {
-    String mContent;
-    String mCapsuleId;
-    Boolean mIsPublic;
-    String mUserId;
+    String content;
+    String capsuleId;
+    Boolean isPublic;
+    String userId;
 
     Contribution(String content, String capsuleId, Boolean isPublic, String userId) {
-        this.mContent = content;
-        this.mCapsuleId = capsuleId;
-        this.mIsPublic = isPublic;
-        this.mUserId = userId;
+        this.content = content;
+        this.capsuleId = capsuleId;
+        this.isPublic = isPublic;
+        this.userId = userId;
     }
 }
