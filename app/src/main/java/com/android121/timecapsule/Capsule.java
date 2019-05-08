@@ -7,6 +7,9 @@ class Capsule {
     Date openDate;
     String recipientId;
     String capsuleName;
+  
+    Capsule() {
+    }
 
     Capsule(Date dateCreated, Date openDate, String recipientId, String capsuleName) {
         this.dateCreated = dateCreated;
