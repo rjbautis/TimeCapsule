@@ -51,11 +51,9 @@ public class EditActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-
                                 Capsule capsule = document.toObject(Capsule.class);
-
                                 if (capsule != null) {
-                                    exampleList.add(new EditItem(R.drawable.download, capsule.mRecipientId, capsule.mOpenDate.toLocaleString()));
+                                    exampleList.add(new EditItem(R.drawable.download, document.getId(), capsule.openDate.toLocaleString()));
                                 }
                             }
 
