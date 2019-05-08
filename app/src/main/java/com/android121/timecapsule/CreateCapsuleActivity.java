@@ -40,6 +40,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
 
     private Button mInviteFriendsButton;
     private Button mCreateCapsuleButton;
+    private EditText mCapsuleNameEditText;
     private EditText mRecipientEditText;
     private EditText mOpenDateEditText;
     private EditText mInviteFriendEditText;
@@ -64,7 +65,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         mInviteFriendsButton = (Button) findViewById(R.id.button_invite_friends);
         mCreateCapsuleButton = (Button) findViewById(R.id.button_create_capsule);
         mRecipientEditText = (EditText) findViewById(R.id.edit_text_recipient);
-        //mOpenDateEditText = (EditText) findViewById(R.id.edit_text_open_date);
+        mCapsuleNameEditText = (EditText) findViewById(R.id.edit_text_capsule_name);
         mInviteFriendEditText = (EditText) findViewById(R.id.edit_text_invite_address);
 
         db = FirebaseFirestore.getInstance();
@@ -127,6 +128,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
 
         // TODO: check recipient address
         String recipientAddress = mRecipientEditText.getText().toString();
+        Log.d(TAG, "querying for address:"+recipientAddress);
 
         Query validateRecipientQuery = db.collection("users").whereEqualTo("email", recipientAddress).limit(1);
 
@@ -137,10 +139,14 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                         // ...
 
                         // Get the last visible document
+                        if(documentSnapshots.size() == 0){
+                            Log.d(TAG, "Query returned 0 results");
+                            return;
+                        }
                         DocumentSnapshot recipientDocument = documentSnapshots.getDocuments()
                                 .get(documentSnapshots.size() -1);
 
-                        final String recipientId = recipientDocument.getString("userId");
+                        final String recipientId = recipientDocument.getId();
 
                         // Create Document to enter into database
                         Date currentTime = Calendar.getInstance().getTime();
@@ -152,7 +158,9 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Capsule capsule = new Capsule(currentTime, openDate, recipientId);
+                        String capsuleName = mCapsuleNameEditText.getText().toString();
+
+                        Capsule capsule = new Capsule(currentTime, openDate, recipientId, capsuleName);
 
                         // Insert document into capsules table
                         db.collection("capsules")
@@ -225,9 +233,6 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
         showDialog(999);
-        Toast.makeText(getApplicationContext(), "ca",
-                Toast.LENGTH_SHORT)
-                .show();
     }
 
     @Override

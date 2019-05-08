@@ -6,10 +6,12 @@ class Capsule {
     Date dateCreated;
     Date openDate;
     String recipientId;
+    String capsuleName;
 
-    Capsule(Date dateCreated, Date openDate, String recipientId) {
+    Capsule(Date dateCreated, Date openDate, String recipientId, String capsuleName) {
         this.dateCreated = dateCreated;
         this.openDate = openDate;
         this.recipientId = recipientId;
+        this.capsuleName = capsuleName;
     }
 }
