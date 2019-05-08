@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -113,8 +114,20 @@ public class ContributeActivity extends AppCompatActivity {
         // Get text from editText
         String note = mNoteText.getText().toString();
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = null;
+        }
+
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, "", !mNoteIsPrivate.isChecked(), "");
+        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId);
 
         // Insert document into contributions table
         db.collection("contributions")

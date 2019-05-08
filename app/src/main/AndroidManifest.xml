@@ -11,13 +11,10 @@
         android:roundIcon="@mipmap/logo_word"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditActivity">
-        </activity>
-
-        <activity android:name=".HomeActivity">
-        </activity>
-
-        <activity android:name=".ViewActivity"></activity>
+        <activity android:name=".OpenCapsule"></activity>
+        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".ViewActivity" />
         <activity android:name=".CreateCapsuleActivity" />
         <activity android:name=".ContributeActivity" />
         <activity android:name=".LoginActivity">
