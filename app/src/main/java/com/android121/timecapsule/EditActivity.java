@@ -53,12 +53,17 @@ public class EditActivity extends AppCompatActivity {
                             for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Capsule capsule = document.toObject(Capsule.class);
                                 if (capsule != null) {
-                                    exampleList.add(new EditItem(R.drawable.download, document.getId(), capsule.openDate.toLocaleString()));
+                                    EditItem item = new EditItem(R.drawable.download, capsule.capsuleName, capsule.openDate.toLocaleString());
+
+                                    // Set the id of the item for usage
+                                    item.setCapsuleId(document.getId());
+
+                                    exampleList.add(item);
                                 }
                             }
 
                             // Set adapter after all documents have been added to list
-                            mAdapter = new EditAdapter(exampleList);
+                            mAdapter = new EditAdapter(exampleList, EditActivity.this);
                             mRecyclerView.setAdapter(mAdapter);
                         }
                     }
