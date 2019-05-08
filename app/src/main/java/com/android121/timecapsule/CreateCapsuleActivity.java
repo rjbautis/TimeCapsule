@@ -127,7 +127,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         // Get text from editText
 
         // TODO: check recipient address
-        String recipientAddress = mRecipientEditText.getText().toString();
+        final String recipientAddress = mRecipientEditText.getText().toString();
         Log.d(TAG, "querying for address:"+recipientAddress);
 
         Query validateRecipientQuery = db.collection("users").whereEqualTo("email", recipientAddress).limit(1);
@@ -141,6 +141,10 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                         // Get the last visible document
                         if(documentSnapshots.size() == 0){
                             Log.d(TAG, "Query returned 0 results");
+                            String userNotFoundString = "User not found: " + recipientAddress;
+                            Toast userNotFoundToast = new Toast(CreateCapsuleActivity.this);
+                            userNotFoundToast.makeText(CreateCapsuleActivity.this, userNotFoundString, Toast.LENGTH_SHORT).show();
+
                             return;
                         }
                         DocumentSnapshot recipientDocument = documentSnapshots.getDocuments()
