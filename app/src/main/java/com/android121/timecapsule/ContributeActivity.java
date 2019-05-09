@@ -50,6 +50,10 @@ public class ContributeActivity extends AppCompatActivity {
     private Button mPictureSubmitButton;
     private Uri file;
 
+    // Invite Friends
+    private Button mInviteFriendButton;
+    private EditText mInviteFriendsEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,9 @@ public class ContributeActivity extends AppCompatActivity {
         mPicture = findViewById(R.id.picture_view);
         mPictureSubmitButton = findViewById(R.id.test123);
 
+        mInviteFriendButton = findViewById(R.id.button_invite_friend);
+        mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
+
 
     }
 
@@ -105,6 +112,68 @@ public class ContributeActivity extends AppCompatActivity {
             mNoteText.setVisibility(EditText.VISIBLE);
             mNoteSubmitButton.setVisibility(Button.VISIBLE);
             mNoteIsPrivate.setVisibility(CheckBox.VISIBLE);
+        }
+    }
+
+    public void showInviteFriends(View v) {
+
+        // Toggle visibility of the fields
+        if(mInviteFriendsEditText.getVisibility() == EditText.VISIBLE){
+            mInviteFriendsEditText.setVisibility(EditText.GONE);
+            mInviteFriendButton.setVisibility(Button.GONE);
+        } else {
+            mInviteFriendsEditText.setVisibility(EditText.VISIBLE);
+            mInviteFriendButton.setVisibility(Button.VISIBLE);
+        }
+    }
+
+    public void inviteFriend(View v){
+        String userId = mInviteFriendsEditText.getText().toString();
+        String senderId;
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = null;
+        }
+
+        Invitation invitation = new Invitation(mCapsuleId, userId, senderId);
+
+        // Insert document into invitations table
+        db.collection("invitations")
+                .add(invitation)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Inviting friend. DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document while trying to invite friend", e);
+                    }
+                });
+
+        // Show toast message to confirm submission
+        String inviteToastString = userId + " invited!";
+        Toast noteSubmittedToast = new Toast(this);
+        noteSubmittedToast.makeText(this, inviteToastString, Toast.LENGTH_SHORT).show();
+
+        // TODO: Clear edit text field
+        mInviteFriendsEditText.setText("");
+
+        if(mInviteFriendsEditText.getVisibility() == EditText.VISIBLE){
+            mInviteFriendsEditText.setVisibility(EditText.GONE);
+            mInviteFriendButton.setVisibility(Button.GONE);
+        } else {
+            mInviteFriendsEditText.setVisibility(EditText.VISIBLE);
+            mInviteFriendButton.setVisibility(Button.VISIBLE);
         }
     }
 

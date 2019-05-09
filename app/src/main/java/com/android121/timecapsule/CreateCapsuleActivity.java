@@ -43,7 +43,6 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     private EditText mCapsuleNameEditText;
     private EditText mRecipientEditText;
     private EditText mOpenDateEditText;
-    private EditText mInviteFriendEditText;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -66,61 +65,12 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         mCreateCapsuleButton = (Button) findViewById(R.id.button_create_capsule);
         mRecipientEditText = (EditText) findViewById(R.id.edit_text_recipient);
         mCapsuleNameEditText = (EditText) findViewById(R.id.edit_text_capsule_name);
-        mInviteFriendEditText = (EditText) findViewById(R.id.edit_text_invite_address);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
     }
 
-    public void inviteFriends(View v){
-        // Create Document to enter into database
-        // TODO: Error check the email address
-        //      Check for pre-existing invitation
-        //      Make sure email address is a valid user.
-
-        // TODO: FIX BUG WHERE EMPTY RECIPIENT CRASHES
-
-        String userId = mInviteFriendEditText.getText().toString();
-        String senderId;
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser != null) {
-            Log.d(TAG, "Firebase user authenticated already");
-
-            senderId = currentUser.getUid();
-        } else {
-            Log.d(TAG, "User not logged in!");
-            senderId = null;
-        }
-
-        Invitation invitation = new Invitation(null, userId, senderId);
-
-        // Insert document into invitations table
-        db.collection("invitations")
-                .add(invitation)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "Inviting friend. DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document while trying to invite friend", e);
-                    }
-                });
-
-        // Show toast message to confirm submission
-        String inviteToastString = userId + " invited!";
-        Toast noteSubmittedToast = new Toast(this);
-        noteSubmittedToast.makeText(this, inviteToastString, Toast.LENGTH_SHORT).show();
-
-        // TODO: Clear edit text field
-        mInviteFriendEditText.setText("");
-    }
 
     public void createCapsule(View v){
         // Go to contribute activity? Pass contribution ID

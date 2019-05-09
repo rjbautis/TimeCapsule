@@ -102,6 +102,29 @@
                 android:text="@string/contribute_add_videos"
                 />
 
+        <Button
+            android:id="@+id/button_invite_friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showInviteFriends"
+            android:text="Invite Friends!" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_invite_friend"
+            android:visibility="gone"
+            android:hint="Type your friend's email address."
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_invite_friend"
+            android:visibility="gone"
+            android:onClick="inviteFriend"
+            android:text="Send invite!"/>
+
 
         <Button
             android:id="@+id/button_finish"
