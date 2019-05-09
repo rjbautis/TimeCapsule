@@ -254,6 +254,8 @@ public class ContributeActivity extends AppCompatActivity {
 
     public void finishContributing(View view){
         Intent intent = new Intent(ContributeActivity.this, HomeActivity.class);
+        // Finish all activities that were on the stack before going back to HomeActivity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
