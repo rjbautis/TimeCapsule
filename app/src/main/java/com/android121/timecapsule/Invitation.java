@@ -5,6 +5,9 @@ class Invitation {
     String userId;
     String senderId;
 
+    Invitation(){
+    }
+
     Invitation(String capsuleId, String userId, String senderId) {
         this.capsuleId = capsuleId;
         this.userId = userId;

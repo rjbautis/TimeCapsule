@@ -6,6 +6,9 @@ class Contribution {
     Boolean isPublic;
     String userId;
 
+    Contribution(){
+    }
+
     Contribution(String content, String capsuleId, Boolean isPublic, String userId) {
         this.content = content;
         this.capsuleId = capsuleId;
