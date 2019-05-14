@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/logo_word"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OpenCapsule"></activity>
-        <activity android:name=".EditActivity"></activity>
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".ViewActivity" />
-        <activity android:name=".CreateCapsuleActivity" />
-        <activity android:name=".ContributeActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".OpenActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ViewActivity" />
+        <activity android:name=".CreateCapsuleActivity" />
+        <activity android:name=".ContributeActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
     </application>
 
