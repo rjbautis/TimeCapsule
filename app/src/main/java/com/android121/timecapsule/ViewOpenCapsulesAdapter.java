@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHolder> {
-
-    private ArrayList<EditItem> mExampleList;
+public class ViewOpenCapsulesAdapter extends RecyclerView.Adapter<ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder> {
+    private ArrayList<EditItem> openCapsules;
     private Context mContext;
 
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewOpenCapsulesHolder extends RecyclerView.ViewHolder{
         View view;
 
         public ImageView mImageView;
         public TextView mCapsuleName;
         public TextView mOpenDate;
 
-        public ExampleViewHolder(View itemView) {
+        public ViewOpenCapsulesHolder(View itemView) {
             super(itemView);
 
             this.view = itemView;
@@ -36,42 +34,40 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHol
         }
     }
 
-    public EditAdapter(ArrayList<EditItem> exampleList, Context context) {
+    public ViewOpenCapsulesAdapter(ArrayList<EditItem> openCapsules, Context context) {
         mContext = context;
-        mExampleList = exampleList;
+        this.openCapsules = openCapsules;
     }
 
     @NonNull
     @Override
-    public EditAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.example_item, viewGroup, false);
-        return new ExampleViewHolder(v);
+        return new ViewOpenCapsulesHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EditAdapter.ExampleViewHolder exampleViewHolder, int position) {
-        final EditItem currentItem = mExampleList.get(position);
+    public void onBindViewHolder(@NonNull ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder viewOpenCapsulesHolder, int position) {
+        final EditItem currentItem = openCapsules.get(position);
 
-        exampleViewHolder.mImageView.setImageResource(currentItem.getImageResource());
-        exampleViewHolder.mCapsuleName.setText(currentItem.getCapsuleName());
-        exampleViewHolder.mOpenDate.setText("Open Until:\n" + currentItem.getOpenDate());
+        viewOpenCapsulesHolder.mImageView.setImageResource(currentItem.getImageResource());
+        viewOpenCapsulesHolder.mCapsuleName.setText(currentItem.getCapsuleName());
+        viewOpenCapsulesHolder.mOpenDate.setText("Available Since:\n" + currentItem.getOpenDate());
 
-        exampleViewHolder.view.setOnClickListener(new View.OnClickListener() {
+        viewOpenCapsulesHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println(currentItem.getCapsuleId());
-
-                Intent intent = new Intent(mContext, ContributeActivity.class);
+                Intent intent = new Intent(mContext, OpenCapsuleActivity.class);
                 intent.putExtra("capsuleId", currentItem.getCapsuleId());
 
                 mContext.startActivity(intent);
+
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mExampleList.size();
+        return openCapsules.size();
     }
 }
