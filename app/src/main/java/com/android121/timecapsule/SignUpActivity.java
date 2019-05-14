@@ -126,10 +126,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
                             if (firebaseUser != null) {
-                                User user = new User(name, email, firebaseUser.getUid());
+                                User user = new User(name, email);
 
                                 // Add or replace user in the users collection in the database
-                                db.collection("users").document(user.userId)
+                                db.collection("users").document(firebaseUser.getUid())
                                         .set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -148,7 +148,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
                             Toast.makeText(SignUpActivity.this, "Successfully signed up!",
                                     Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SignUpActivity.this, ContributeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
