@@ -54,7 +54,7 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHol
 
         exampleViewHolder.mImageView.setImageResource(currentItem.getImageResource());
         exampleViewHolder.mCapsuleName.setText(currentItem.getCapsuleName());
-        exampleViewHolder.mOpenDate.setText(currentItem.getOpenDate());
+        exampleViewHolder.mOpenDate.setText("Open Until: " + currentItem.getOpenDate());
 
         exampleViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
