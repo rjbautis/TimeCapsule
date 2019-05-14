@@ -7,6 +7,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +30,7 @@ public class EditActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ProgressBar mProgressBar;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -43,12 +46,11 @@ public class EditActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mRecyclerView = findViewById(R.id.recyclerView);
+        mProgressBar = findViewById(R.id.progressBar);
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(),
-                DividerItemDecoration.VERTICAL));
 
         // Get all capsules (by ID) that a user has been invited
         final ArrayList<String> invitedCapsuleIdList = new ArrayList<>();
@@ -88,6 +90,9 @@ public class EditActivity extends AppCompatActivity {
                                                         exampleList.add(item);
                                                     }
                                                 }
+
+                                                mProgressBar.setVisibility(View.GONE);
+
                                                 // Set adapter after all documents have been added to list
                                                 mAdapter = new EditAdapter(exampleList, EditActivity.this);
                                                 mRecyclerView.setAdapter(mAdapter);
