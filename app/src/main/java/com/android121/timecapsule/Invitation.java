@@ -2,15 +2,15 @@ package com.android121.timecapsule;
 
 class Invitation {
     String capsuleId;
-    String userId;
+    String inviteEmail;
     String senderId;
 
     Invitation(){
     }
 
-    Invitation(String capsuleId, String userId, String senderId) {
+    Invitation(String capsuleId, String inviteEmail, String senderId) {
         this.capsuleId = capsuleId;
-        this.userId = userId;
+        this.inviteEmail = inviteEmail;
         this.senderId = senderId;
     }
 }

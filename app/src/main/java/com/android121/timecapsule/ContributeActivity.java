@@ -124,7 +124,7 @@ public class ContributeActivity extends AppCompatActivity {
     }
 
     public void inviteFriend(View v){
-        String userId = mInviteFriendsEditText.getText().toString();
+        String inviteEmail = mInviteFriendsEditText.getText().toString();
         String senderId;
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -138,7 +138,7 @@ public class ContributeActivity extends AppCompatActivity {
             senderId = null;
         }
 
-        Invitation invitation = new Invitation(mCapsuleId, userId, senderId);
+        Invitation invitation = new Invitation(mCapsuleId, inviteEmail, senderId);
 
         // Insert document into invitations table
         db.collection("invitations")
@@ -157,7 +157,7 @@ public class ContributeActivity extends AppCompatActivity {
                 });
 
         // Show toast message to confirm submission
-        String inviteToastString = userId + " invited!";
+        String inviteToastString = inviteEmail + " invited!";
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, inviteToastString, Toast.LENGTH_SHORT).show();
 
