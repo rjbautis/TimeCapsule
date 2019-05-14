@@ -138,6 +138,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                             senderId = null;
                                         }
 
+                                        // TODO: fix sender/recipient
                                         Invitation invitation = new Invitation(documentReference.getId(), senderId, recipientId);
 
                                         db.collection("invitations")
