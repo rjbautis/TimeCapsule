@@ -165,7 +165,6 @@ public class ContributeActivity extends AppCompatActivity {
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, inviteToastString, Toast.LENGTH_SHORT).show();
 
-        // TODO: Clear edit text field
         mInviteFriendsEditText.setText("");
 
         if(mInviteFriendsEditText.getVisibility() == EditText.VISIBLE){
@@ -196,7 +195,7 @@ public class ContributeActivity extends AppCompatActivity {
         }
 
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId);
+        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text");
 
         // Insert document into contributions table
         db.collection("contributions")
