@@ -15,36 +15,46 @@ import java.util.Date;
 
 public class FirebaseUtil {
 
-    private Context mContext;
+    // Firebase Storage Task Listener
+    interface OnStorageTaskCompleteListener {
+        void onSuccess(String path);
+        void onFailure();
+    }
 
+    private Context mContext;
     private FirebaseStorage storage;
 
     FirebaseUtil(Context context) {
         mContext = context;
-
         storage = FirebaseStorage.getInstance();
     }
 
-    public void uploadStorage(Uri file, String mCapsuleId) {
+    public void uploadStorage(Uri file, String mCapsuleId, final OnStorageTaskCompleteListener mStorageListener) {
         StorageReference storageRef = storage.getReference();
         Date date = new Date();
 
         // Unique path of media to be uploaded in Firebase Storage will be `capsuleId/seconds_filepath.png`
-        String path = mCapsuleId + "/" + date.getTime() + "_" + file.getLastPathSegment();
-        StorageReference capsuleRef = storageRef.child(path);
+        final String path = mCapsuleId + "/" + date.getTime() + "_" + file.getLastPathSegment();
+        final StorageReference capsuleRef = storageRef.child(path);
 
         // Upload file to Storage
-        UploadTask uploadTask = capsuleRef.putFile(file);
+        final UploadTask uploadTask = capsuleRef.putFile(file);
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(mContext, "Failed to upload picture" ,Toast.LENGTH_LONG).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(mContext, "Successfully uploaded picture" ,Toast.LENGTH_LONG).show();
+                // Get download URL for the firebase storage object
+                capsuleRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        mStorageListener.onSuccess(uri.toString());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                mStorageListener.onFailure();
             }
         });
     }

@@ -157,8 +157,6 @@ public class CreateCapsuleActivity extends AppCompatActivity {
 
 
 
-                                        // TODO: Finish this intent to change screens
-                                        //      Pass capsule ID
                                         // Create intent to go to contribute page
                                         Intent intent = new Intent(CreateCapsuleActivity.this, ContributeActivity.class);
                                         intent.putExtra("capsuleId", documentReference.getId());

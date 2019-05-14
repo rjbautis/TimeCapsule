@@ -94,7 +94,7 @@
                     android:visibility="gone"
                     android:text="Submit"
                     android:onClick="submitPicture"
-                    android:id="@+id/test123"/>
+                    android:id="@+id/picture_submit_btn"/>
 
         <Button
                 android:layout_width="match_parent"

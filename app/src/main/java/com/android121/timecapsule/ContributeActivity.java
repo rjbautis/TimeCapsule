@@ -16,14 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ContributeActivity extends AppCompatActivity {
@@ -37,7 +34,6 @@ public class ContributeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private FirebaseUtil firebaseUtil;
-
 
     // Note
     private EditText mNoteText;
@@ -82,7 +78,7 @@ public class ContributeActivity extends AppCompatActivity {
         // Picture References
         mPictureText = findViewById(R.id.choose_picture_hint_text);
         mPicture = findViewById(R.id.picture_view);
-        mPictureSubmitButton = findViewById(R.id.test123);
+        mPictureSubmitButton = findViewById(R.id.picture_submit_btn);
 
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
@@ -128,7 +124,7 @@ public class ContributeActivity extends AppCompatActivity {
     }
 
     public void inviteFriend(View v){
-        String userId = mInviteFriendsEditText.getText().toString();
+        String inviteEmail = mInviteFriendsEditText.getText().toString();
         String senderId;
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -142,7 +138,7 @@ public class ContributeActivity extends AppCompatActivity {
             senderId = null;
         }
 
-        Invitation invitation = new Invitation(mCapsuleId, userId, senderId);
+        Invitation invitation = new Invitation(mCapsuleId, inviteEmail, senderId);
 
         // Insert document into invitations table
         db.collection("invitations")
@@ -161,11 +157,10 @@ public class ContributeActivity extends AppCompatActivity {
                 });
 
         // Show toast message to confirm submission
-        String inviteToastString = userId + " invited!";
+        String inviteToastString = inviteEmail + " invited!";
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, inviteToastString, Toast.LENGTH_SHORT).show();
 
-        // TODO: Clear edit text field
         mInviteFriendsEditText.setText("");
 
         if(mInviteFriendsEditText.getVisibility() == EditText.VISIBLE){
@@ -196,7 +191,7 @@ public class ContributeActivity extends AppCompatActivity {
         }
 
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId);
+        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text");
 
         // Insert document into contributions table
         db.collection("contributions")
@@ -248,7 +243,38 @@ public class ContributeActivity extends AppCompatActivity {
 
     public void submitPicture(View view) {
         if (file != null) {
-            firebaseUtil.uploadStorage(file, "nice");
+            firebaseUtil.uploadStorage(file, mCapsuleId, new FirebaseUtil.OnStorageTaskCompleteListener() {
+                @Override
+                public void onSuccess(String downloadUrl) {
+                    Toast.makeText(ContributeActivity.this, "Successfully uploaded picture!" ,Toast.LENGTH_LONG).show();
+
+                    // Write picture to firebase document
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                    // Create photo document to enter to database
+                    Contribution contribution = new Contribution(downloadUrl, mCapsuleId, false, currentUser.getUid(), "photo");
+
+                    // Insert photo document into contributions table
+                    db.collection("contributions")
+                            .add(contribution)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+                }
+                @Override
+                public void onFailure() {
+                    Toast.makeText(ContributeActivity.this, "Failed to upload picture." ,Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
