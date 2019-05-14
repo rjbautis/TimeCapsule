@@ -32,7 +32,6 @@ public class OpenCapsuleActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     String capsuleName;
     List<ContributionItem> contributionItemList = new ArrayList<ContributionItem>();
-    List<String> stringList = new ArrayList<String>();
     ContributionAdapter adapter;
     Context context;
     ListView listView;
@@ -52,7 +51,7 @@ public class OpenCapsuleActivity extends AppCompatActivity {
 //            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
 //        }
 
-        mCapsuleId = "ecedX2RK3WFvPBhKW294";
+        mCapsuleId = "bdWcQNkGbvMSSVpS1fad";
 
         db = FirebaseFirestore.getInstance();
 
@@ -74,15 +73,16 @@ public class OpenCapsuleActivity extends AppCompatActivity {
                             return;
                         }
 
+                        Log.d(TAG, "Query returned : " + documentSnapshots.size());
                         for(int i = 0; i < documentSnapshots.size(); i++){
                             DocumentSnapshot contributionDocument = documentSnapshots.getDocuments().get(i);
-                            //ContributionItem contribution = new ContributionItem(contributionDocument.getString("type"), contributionDocument.getString("content"));
-                            //contributionItemList.add(contribution);
-                            stringList.add(contributionDocument.getString("content"));
+                            Log.d(TAG, "adding contribution: type: " + contributionDocument.getString("type") + ", content: " + contributionDocument.getString("content"));
+                            ContributionItem contribution = new ContributionItem(contributionDocument.getString("type"), contributionDocument.getString("content"));
+                            contributionItemList.add(contribution);
+
                         }
 
-                        List<String> empty = new ArrayList<String>();
-                        adapter = new ContributionAdapter(OpenCapsuleActivity.this, stringList);
+                        adapter = new ContributionAdapter(OpenCapsuleActivity.this, contributionItemList);
                         listView.setAdapter(adapter);
 
 

@@ -9,19 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-public class ContributionAdapter extends ArrayAdapter<String> {
+public class ContributionAdapter extends ArrayAdapter<ContributionItem> {
 
         private final Context context;
-        //private final List<String> types;
-        private final List<String> contents;
+        private final List<ContributionItem> contributions;
 
-        public ContributionAdapter(Context context, List<String> contents){
-            super(context, R.layout.rowlayout, contents);
+        public ContributionAdapter(Context context, List<ContributionItem> contributions){
+            super(context, R.layout.rowlayout, contributions);
             this.context = context;
-            //this.types = types;
-            this.contents = contents;
+            this.contributions = contributions;
         }
 
         @Override
@@ -33,7 +33,17 @@ public class ContributionAdapter extends ArrayAdapter<String> {
 
             // Displaying a textview
             TextView textView = (TextView) rowView.findViewById(R.id.label);
-            textView.setText(contents.get(position));
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.image);
+            ContributionItem contribution = contributions.get(position);
+            if(contribution.type.equals("text")){
+                textView.setText(contribution.content);
+            } else if (contribution.type.equals("photo")){
+                textView.setVisibility(View.GONE);
+                Glide.with(context).load(contribution.content).into(imageView);
+            }
+
+
+
 
             return rowView;
         }
