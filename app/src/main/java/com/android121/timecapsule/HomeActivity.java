@@ -14,9 +14,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private ImageButton mGotoAdd;
     private ImageButton mGotoView;
+
     private ImageButton mGotoEdit;
     private ImageButton mGotoOpen;
     private ImageButton mGotoSettings;
+
     private Button mLogOut;
 
     @Override
@@ -34,14 +36,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mGotoEdit = findViewById(R.id.capsuleHistory);
-        mGotoEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ContributeActivity.class));
-            }
-        });
-
         mGotoView = findViewById(R.id.capsuleHistory);
         mGotoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +43,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, EditActivity.class));
             }
         });
+
+//        mGoToOpen = findViewById(R.id.capsuleOpen);
+//        mGoToOpen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(HomeActivity.this, ViewOpenCapsulesActivity.class));
+//            }
+//        });
 
         mGotoOpen = (ImageButton) findViewById(R.id.capsuleOpen);
         mGotoOpen.setOnClickListener(new View.OnClickListener() {

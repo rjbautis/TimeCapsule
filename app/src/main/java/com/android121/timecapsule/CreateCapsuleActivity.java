@@ -125,20 +125,10 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                         Log.d(TAG, "Created capsule. DocumentSnapshot added with ID: " + documentReference.getId());
 
                                         // invite creator to contribute
-                                        String senderId;
-
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                                        if (currentUser != null) {
-                                            Log.d(TAG, "Firebase user authenticated already");
+                                        Invitation invitation = new Invitation(documentReference.getId(), currentUser.getEmail(), currentUser.getUid());
 
-                                            senderId = currentUser.getUid();
-                                        } else {
-                                            Log.d(TAG, "User not logged in!");
-                                            senderId = null;
-                                        }
-
-                                        Invitation invitation = new Invitation(documentReference.getId(), senderId, recipientId);
 
                                         db.collection("invitations")
                                                 .add(invitation)
@@ -156,7 +146,6 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                                 });
 
 
-
                                         // Create intent to go to contribute page
                                         Intent intent = new Intent(CreateCapsuleActivity.this, ContributeActivity.class);
                                         intent.putExtra("capsuleId", documentReference.getId());
@@ -170,15 +159,8 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                         Log.w(TAG, "Error adding document", e);
                                     }
                                 });
-
-
-
-
                     }
                 });
-
-
-
     }
 
 
