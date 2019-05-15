@@ -269,6 +269,16 @@ public class ContributeActivity extends AppCompatActivity {
                                     Log.w(TAG, "Error adding document", e);
                                 }
                             });
+                    if (mPicture.getVisibility() == View.GONE) {
+                        mPictureText.setVisibility(View.VISIBLE);
+                        mPicture.setVisibility(View.VISIBLE);
+                        mPictureSubmitButton.setVisibility(View.VISIBLE);
+                    } else {
+                        mPictureText.setVisibility(View.GONE);
+                        mPicture.setVisibility(View.GONE);
+                        mPictureSubmitButton.setVisibility(View.GONE);
+                    }
+
                 }
                 @Override
                 public void onFailure() {

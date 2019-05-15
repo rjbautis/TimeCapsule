@@ -44,14 +44,14 @@ public class OpenCapsuleActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view_contributions);
 
         // Get capsule id from bundle
-//        Bundle extras = getIntent().getExtras();
-//
-//        if (extras != null) {
-//            mCapsuleId = extras.getString("capsuleId");
-//            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
-//        }
+        Bundle extras = getIntent().getExtras();
 
-        mCapsuleId = "bdWcQNkGbvMSSVpS1fad";
+        if (extras != null) {
+            mCapsuleId = extras.getString("capsuleId");
+            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+        }
+
+        //mCapsuleId = "bdWcQNkGbvMSSVpS1fad";
 
         db = FirebaseFirestore.getInstance();
 
