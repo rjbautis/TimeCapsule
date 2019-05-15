@@ -145,6 +145,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                                     }
                                                 });
 
+
                                         // Create intent to go to contribute page
                                         Intent intent = new Intent(CreateCapsuleActivity.this, ContributeActivity.class);
                                         intent.putExtra("capsuleId", documentReference.getId());

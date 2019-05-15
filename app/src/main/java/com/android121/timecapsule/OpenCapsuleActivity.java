@@ -89,5 +89,6 @@ public class OpenCapsuleActivity extends AppCompatActivity {
 
                     }
                 });
+
     }
 }

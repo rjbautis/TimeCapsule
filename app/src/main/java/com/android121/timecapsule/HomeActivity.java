@@ -14,7 +14,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private ImageButton mGotoAdd;
     private ImageButton mGotoView;
-    private ImageButton mGoToOpen;
+
+    private ImageButton mGotoEdit;
+    private ImageButton mGotoOpen;
+    private ImageButton mGotoSettings;
+
     private Button mLogOut;
 
     @Override
@@ -40,11 +44,19 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mGoToOpen = findViewById(R.id.capsuleOpen);
-        mGoToOpen.setOnClickListener(new View.OnClickListener() {
+//        mGoToOpen = findViewById(R.id.capsuleOpen);
+//        mGoToOpen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(HomeActivity.this, ViewOpenCapsulesActivity.class));
+//            }
+//        });
+
+        mGotoOpen = (ImageButton) findViewById(R.id.capsuleOpen);
+        mGotoOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ViewOpenCapsulesActivity.class));
+                startActivity(new Intent(HomeActivity.this, OpenActivity.class));
             }
         });
 

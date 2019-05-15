@@ -14,6 +14,7 @@
                 <activity android:name=".ViewOpenCapsulesActivity">
                 </activity>
                 <activity android:name=".OpenCapsuleActivity"/>
+                <activity android:name=".OpenActivity"></activity>
                 <activity android:name=".EditActivity"/>
                 <activity android:name=".HomeActivity"/>
                 <activity android:name=".ViewActivity"/>
