@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/anton</item>
+        <item>@font/days_one</item>
+        <item>@font/exo_2</item>
+        <item>@font/exo_2_light_italic</item>
+        <item>@font/iceberg</item>
+        <item>@font/italiana</item>
+        <item>@font/trade_winds</item>
+    </array>
+</resources>
