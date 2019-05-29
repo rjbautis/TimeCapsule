@@ -11,7 +11,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.Date;
+import java.util.Objects;
 
 public class FirebaseUtil {
 
@@ -33,8 +35,8 @@ public class FirebaseUtil {
         StorageReference storageRef = storage.getReference();
         Date date = new Date();
 
-        // Unique path of media to be uploaded in Firebase Storage will be `capsuleId/seconds_filepath.png`
-        final String path = mCapsuleId + "/" + date.getTime() + "_" + file.getLastPathSegment();
+        // Unique path of media to be uploaded in Firebase Storage will be `capsuleId/seconds_filename.png`
+        final String path = mCapsuleId + "/" + date.getTime() + "_" + new File(Objects.requireNonNull(file.getPath())).getName();
         final StorageReference capsuleRef = storageRef.child(path);
 
         // Upload file to Storage

@@ -100,8 +100,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/contribute_add_videos"
-                android:visibility="gone"
+                android:onClick="showVideoFields"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_video_hint"
+                android:visibility="gone"
+                android:id="@+id/choose_video_hint_text"/>
+
+            <VideoView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:id="@+id/video_view"
+                android:visibility="gone"
+                android:layout_margin="15dp"/>
+
+            <Button
+                android:id="@+id/select_video_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:onClick="chooseVideo"
+                android:text="@string/select_video"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Submit"
+                android:onClick="submitVideo"
+                android:visibility="gone"
+                android:id="@+id/video_submit_btn"/>
 
         <Button
             android:id="@+id/button_invite_friends"
