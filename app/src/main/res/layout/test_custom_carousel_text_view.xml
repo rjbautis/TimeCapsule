@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/custom_carousel_text_view">-->
+
+
+<!--</LinearLayout>-->
+
+
+<com.synnapps.carouselview.CarouselView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_carousel_view"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:fillColor="#FFFFFFFF"
+    app:pageColor="#00000000"
+    app:radius="6dp"
+    app:slideInterval="3000"
+    app:strokeColor="#FF777777"
+    app:strokeWidth="1dp">
+
+
+    <TextView
+        android:id="@+id/carousel_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text=""
+        android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/carousel_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <VideoView
+        android:id="@+id/carousel_video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/carousel_donor_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text=""
+        android:textSize="24sp"
+        android:visibility="visible"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        />
+
+</com.synnapps.carouselview.CarouselView>

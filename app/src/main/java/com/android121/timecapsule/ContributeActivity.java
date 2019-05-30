@@ -16,12 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ContributeActivity extends AppCompatActivity {
 
@@ -55,7 +60,6 @@ public class ContributeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contribute);
 
-        setTitle(R.string.contribute_contribute);
 
         // Get capsule id from bundle
         Bundle extras = getIntent().getExtras();
@@ -69,6 +73,24 @@ public class ContributeActivity extends AppCompatActivity {
         firebaseUtil = new FirebaseUtil(this);
 
         db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("capsules").document(mCapsuleId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        setTitle(document.get("capsuleName").toString());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
 
         // Note References
         mNoteText = (EditText) findViewById(R.id.edit_text_note);
@@ -172,14 +194,80 @@ public class ContributeActivity extends AppCompatActivity {
         }
     }
 
-    // Posts note to database and collapses fields
-    public void submitNote(View V){
+//    // Posts note to database and collapses fields
+//    public void submitNote(View V, String userName){
+//
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        final String senderId;
+//
+//        if(currentUser != null) {
+//            Log.d(TAG, "Firebase user authenticated already");
+//
+//            senderId = currentUser.getUid();
+//        } else {
+//            Log.d(TAG, "User not logged in!");
+//            senderId = "";
+//        }
+//
+//        DocumentReference docRef = db.collection("users").document(senderId);
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+//
+//                        // Get text from editText
+//                        String note = mNoteText.getText().toString();
+//
+//
+//                        // Create Document to enter into database
+//                        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text", document.get("name").toString());
+//
+//                        // Insert document into contributions table
+//                        db.collection("contributions")
+//                                .add(contribution)
+//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                    @Override
+//                                    public void onSuccess(DocumentReference documentReference) {
+//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error adding document", e);
+//                                    }
+//                                });
+//                    } else {
+//                        Log.d(TAG, "No such document");
+//                    }
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                }
+//            }
+//        });
+//
+//
+//
+//
+//        // Collapse fields
+//        mNoteText.setVisibility(EditText.GONE);
+//        mNoteSubmitButton.setVisibility(Button.GONE);
+//        mNoteIsPrivate.setVisibility(CheckBox.GONE);
+//
+//        // Show toast message to confirm submission
+//        Toast noteSubmittedToast = new Toast(this);
+//        noteSubmittedToast.makeText(this, R.string.contribute_note_submitted, Toast.LENGTH_SHORT).show();
+//
+//    }
 
-        // Get text from editText
-        String note = mNoteText.getText().toString();
+    // Posts note to database and collapses fields
+    public void submitNote(View V, String userName){
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String senderId;
+        final String senderId;
 
         if(currentUser != null) {
             Log.d(TAG, "Firebase user authenticated already");
@@ -187,11 +275,16 @@ public class ContributeActivity extends AppCompatActivity {
             senderId = currentUser.getUid();
         } else {
             Log.d(TAG, "User not logged in!");
-            senderId = null;
+            senderId = "";
         }
 
+
+        // Get text from editText
+        String note = mNoteText.getText().toString();
+
+
         // Create Document to enter into database
-        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text");
+        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text", userName);
 
         // Insert document into contributions table
         db.collection("contributions")
@@ -221,6 +314,7 @@ public class ContributeActivity extends AppCompatActivity {
     }
 
 
+
     public void showPictureFields(View view) {
         if (mPicture.getVisibility() == View.GONE) {
             mPictureText.setVisibility(View.VISIBLE);
@@ -241,7 +335,84 @@ public class ContributeActivity extends AppCompatActivity {
         startActivityForResult(intent, RC_IMAGE_PICKER);
     }
 
-    public void submitPicture(View view) {
+    public void preSubmitNote(View view){
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        final String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = "";
+        }
+
+        final View view2 = view;
+
+        DocumentReference docRef = db.collection("users").document(senderId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        String userName = document.get("name").toString();
+                        submitNote(view2, userName);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
+    public void preSubmitPicture(View view){
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        final String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = "";
+        }
+
+        final View view2 = view;
+
+        DocumentReference docRef = db.collection("users").document(senderId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        String userName = document.get("name").toString();
+                        submitPicture(view2, userName);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
+    public void submitPicture(View view, String userName) {
+
+        final String uName = userName;
+
         if (file != null) {
             firebaseUtil.uploadStorage(file, mCapsuleId, new FirebaseUtil.OnStorageTaskCompleteListener() {
                 @Override
@@ -252,7 +423,7 @@ public class ContributeActivity extends AppCompatActivity {
                     FirebaseUser currentUser = mAuth.getCurrentUser();
 
                     // Create photo document to enter to database
-                    Contribution contribution = new Contribution(downloadUrl, mCapsuleId, false, currentUser.getUid(), "photo");
+                    Contribution contribution = new Contribution(downloadUrl, mCapsuleId, false, currentUser.getUid(), "photo", uName);
 
                     // Insert photo document into contributions table
                     db.collection("contributions")

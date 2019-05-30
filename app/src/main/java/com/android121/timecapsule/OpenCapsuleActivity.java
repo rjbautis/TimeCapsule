@@ -77,7 +77,7 @@ public class OpenCapsuleActivity extends AppCompatActivity {
                         for(int i = 0; i < documentSnapshots.size(); i++){
                             DocumentSnapshot contributionDocument = documentSnapshots.getDocuments().get(i);
                             Log.d(TAG, "adding contribution: type: " + contributionDocument.getString("type") + ", content: " + contributionDocument.getString("content"));
-                            ContributionItem contribution = new ContributionItem(contributionDocument.getString("type"), contributionDocument.getString("content"));
+                            ContributionItem contribution = new ContributionItem(contributionDocument.getString("type"), contributionDocument.getString("content"), contributionDocument.getString("userId"), contributionDocument.getString("name"));
                             contributionItemList.add(contribution);
 
                         }
