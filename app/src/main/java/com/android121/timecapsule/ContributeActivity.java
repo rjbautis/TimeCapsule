@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +35,7 @@ public class ContributeActivity extends AppCompatActivity {
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
     private static final int RC_IMAGE_PICKER = 101;
+    private static final int RC_VIDEO_PICKER = 102;
 
     private String mCapsuleId;
     private FirebaseFirestore db;
@@ -50,6 +53,12 @@ public class ContributeActivity extends AppCompatActivity {
     private ImageView mPicture;
     private Button mPictureSubmitButton;
     private Uri file;
+
+    // Video
+    private TextView mVideoText;
+    private VideoView mVideo;
+    private Button mSelectVideoBtn;
+    private Button mVideoSubmitBtn;
 
     // Youtube Links
     private EditText mYoutubeLink;
@@ -106,6 +115,12 @@ public class ContributeActivity extends AppCompatActivity {
         mPicture = findViewById(R.id.picture_view);
         mPictureSubmitButton = findViewById(R.id.picture_submit_btn);
 
+        // Video references
+        mVideoText = findViewById(R.id.choose_video_hint_text);
+        mVideo = findViewById(R.id.video_view);
+        mSelectVideoBtn = findViewById(R.id.select_video_btn);
+        mVideoSubmitBtn = findViewById(R.id.video_submit_btn);
+
         // Youtube Link References
         mYoutubeLink = (EditText) findViewById(R.id.edit_youtube_link);
         mYoutubeSubmitButton = (Button) findViewById(R.id.button_submit_youtube_link);
@@ -124,6 +139,16 @@ public class ContributeActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == RC_IMAGE_PICKER && data != null) {
             file = data.getData();
             Glide.with(this).load(file).into(mPicture);
+        }
+        // If video picked
+        if (resultCode == RESULT_OK && requestCode == RC_VIDEO_PICKER && data != null) {
+            file = data.getData();
+
+            mVideo.setVideoURI(file);
+
+            MediaController mediaController = new MediaController(this);
+            mVideo.setMediaController(mediaController);
+            mediaController.setAnchorView(mVideo);
         }
     }
 
@@ -336,6 +361,70 @@ public class ContributeActivity extends AppCompatActivity {
 
     }
 
+    public void showVideoFields(View view) {
+        toggleVideoFields();
+    }
+
+    private void toggleVideoFields() {
+        if (mVideo.getVisibility() == View.GONE) {
+            mVideoText.setVisibility(View.VISIBLE);
+            mVideo.setVisibility(View.VISIBLE);
+            mSelectVideoBtn.setVisibility(View.VISIBLE);
+            mVideoSubmitBtn.setVisibility(View.VISIBLE);
+        } else {
+            mVideoText.setVisibility(View.GONE);
+            mVideo.setVisibility(View.GONE);
+            mSelectVideoBtn.setVisibility(View.GONE);
+            mVideoSubmitBtn.setVisibility(View.GONE);
+        }
+    }
+
+    public void chooseVideo(View view) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("video/*");
+
+        startActivityForResult(intent, RC_VIDEO_PICKER);
+    }
+
+    public void submitVideo(View view) {
+        if (file != null) {
+            firebaseUtil.uploadStorage(file, mCapsuleId, new FirebaseUtil.OnStorageTaskCompleteListener() {
+                @Override
+                public void onSuccess(String downloadUrl) {
+                    Toast.makeText(ContributeActivity.this, "Successfully uploaded video!" ,Toast.LENGTH_LONG).show();
+
+                    // Write video to firebase document
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                    // Create video document to enter to database
+                    Contribution contribution = new Contribution(downloadUrl, mCapsuleId, false, currentUser.getUid(), "video", "");
+
+                    // Insert video document into contributions table
+                    db.collection("contributions")
+                            .add(contribution)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+                    toggleVideoFields();
+
+                }
+                @Override
+                public void onFailure() {
+                    Toast.makeText(ContributeActivity.this, "Failed to upload video." ,Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
 
     // Posts note to database and collapses fields
     public void submitYoutubeLink(View V){
