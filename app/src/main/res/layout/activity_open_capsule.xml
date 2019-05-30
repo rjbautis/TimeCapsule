@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+tools:context=".OpenCapsuleActivity">
+
+<com.synnapps.carouselview.CarouselView
+    android:id="@+id/carouselView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".OpenCapsuleActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/list_view_contributions"
-            android:layout_width="match_parent"
-            android:layout_height="706dp"
-            android:layout_weight="1" />
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    app:autoPlay="false"
+    app:fillColor="#FFFFFFFF"
+    app:indicatorGravity="top"
+    app:pageColor="#00000000"
+    app:radius="6dp"
+    app:slideInterval="3000"
+    app:strokeColor="#FF777777"
+    app:strokeWidth="1dp" />
 
 
-    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

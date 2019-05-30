@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Exit"
         android:layout_below="@+id/carouselView"
-
+        android:visibility="gone"
         />
 
 </RelativeLayout>
