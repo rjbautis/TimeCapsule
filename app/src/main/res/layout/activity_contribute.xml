@@ -108,7 +108,7 @@
             android:textSize="24sp"
             android:visibility="gone"
             />
->>>>>>> 1eb45088fa46c93ad785e447b51560762d22d8c6
+
 
         <Button
             android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
             android:id="@+id/button_submit_youtube_link"
             android:text="Submit!"
             android:visibility="gone"
-            android:onClick="submitYoutubeLink"
+            android:onClick="preSubmitYoutubeLink"
             />
 
 

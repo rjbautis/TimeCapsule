@@ -217,75 +217,6 @@ public class ContributeActivity extends AppCompatActivity {
         }
     }
 
-//    // Posts note to database and collapses fields
-//    public void submitNote(View V, String userName){
-//
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        final String senderId;
-//
-//        if(currentUser != null) {
-//            Log.d(TAG, "Firebase user authenticated already");
-//
-//            senderId = currentUser.getUid();
-//        } else {
-//            Log.d(TAG, "User not logged in!");
-//            senderId = "";
-//        }
-//
-//        DocumentReference docRef = db.collection("users").document(senderId);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//
-//                        // Get text from editText
-//                        String note = mNoteText.getText().toString();
-//
-//
-//                        // Create Document to enter into database
-//                        Contribution contribution = new Contribution(note, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text", document.get("name").toString());
-//
-//                        // Insert document into contributions table
-//                        db.collection("contributions")
-//                                .add(contribution)
-//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                    @Override
-//                                    public void onSuccess(DocumentReference documentReference) {
-//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.w(TAG, "Error adding document", e);
-//                                    }
-//                                });
-//                    } else {
-//                        Log.d(TAG, "No such document");
-//                    }
-//                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
-//
-//
-//
-//
-//        // Collapse fields
-//        mNoteText.setVisibility(EditText.GONE);
-//        mNoteSubmitButton.setVisibility(Button.GONE);
-//        mNoteIsPrivate.setVisibility(CheckBox.GONE);
-//
-//        // Show toast message to confirm submission
-//        Toast noteSubmittedToast = new Toast(this);
-//        noteSubmittedToast.makeText(this, R.string.contribute_note_submitted, Toast.LENGTH_SHORT).show();
-//
-//    }
-
     // Posts note to database and collapses fields
     public void submitNote(View V, String userName){
 
@@ -337,8 +268,45 @@ public class ContributeActivity extends AppCompatActivity {
     }
 
 
+    public void preSubmitYoutubeLink(View view){
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        final String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = "";
+        }
+
+        final View view2 = view;
+
+        DocumentReference docRef = db.collection("users").document(senderId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        String userName = document.get("name").toString();
+                        submitYoutubeLink(view2, userName);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
     // Posts note to database and collapses fields
-    public void submitYoutubeLink(View V){
+    public void submitYoutubeLink(View V, String userName){
 
         // Get link from editText
         String link = mYoutubeLink.getText().toString();
@@ -357,7 +325,7 @@ public class ContributeActivity extends AppCompatActivity {
 
         // Create Document to enter into database
         // TODO: PASS NAME in preSubmitYoutubeLink
-        Contribution contribution = new Contribution(link, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "yt_video", "");
+        Contribution contribution = new Contribution(link, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "yt_video", userName);
 
         // Insert document into contributions table
         db.collection("contributions")
