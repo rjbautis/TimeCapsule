@@ -263,7 +263,7 @@ public class ContributeActivity extends AppCompatActivity {
         }
 
         // Create Document to enter into database
-        Contribution contribution = new Contribution(link, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "text");
+        Contribution contribution = new Contribution(link, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "yt_video");
 
         // Insert document into contributions table
         db.collection("contributions")
