@@ -82,6 +82,17 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         // Go to contribute activity? Pass contribution ID
         // Get text from editText
 
+        if(mCapsuleNameEditText.getText().toString().equals("")){
+            Toast emptyNameToast = new Toast(CreateCapsuleActivity.this);
+            emptyNameToast.makeText(CreateCapsuleActivity.this, "A name for the capsule is required!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(mRecipientEditText.getText().toString().equals("")){
+            Toast emptyRecipientToast = new Toast(CreateCapsuleActivity.this);
+            emptyRecipientToast.makeText(CreateCapsuleActivity.this, "A recipient for the capsule is required!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mProgressBar.setVisibility(View.VISIBLE);
 
 
