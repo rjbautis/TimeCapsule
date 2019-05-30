@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,9 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     private EditText mCapsuleNameEditText;
     private EditText mRecipientEditText;
     private EditText mOpenDateEditText;
+
+    private ProgressBar mProgressBar;
+
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -66,6 +70,8 @@ public class CreateCapsuleActivity extends AppCompatActivity {
         mRecipientEditText = (EditText) findViewById(R.id.edit_text_recipient);
         mCapsuleNameEditText = (EditText) findViewById(R.id.edit_text_capsule_name);
 
+        mProgressBar = findViewById(R.id.progressBar);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -75,6 +81,9 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     public void createCapsule(View v){
         // Go to contribute activity? Pass contribution ID
         // Get text from editText
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
 
         // TODO: check recipient address
         final String recipientAddress = mRecipientEditText.getText().toString();
@@ -94,6 +103,8 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                             String userNotFoundString = "User not found: " + recipientAddress;
                             Toast userNotFoundToast = new Toast(CreateCapsuleActivity.this);
                             userNotFoundToast.makeText(CreateCapsuleActivity.this, userNotFoundString, Toast.LENGTH_SHORT).show();
+
+                            mProgressBar.setVisibility(View.GONE);
 
                             return;
                         }
@@ -150,6 +161,7 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                         Intent intent = new Intent(CreateCapsuleActivity.this, ContributeActivity.class);
                                         intent.putExtra("capsuleId", documentReference.getId());
                                         startActivity(intent);
+                                        finish();
 
                                     }
                                 })
@@ -157,8 +169,15 @@ public class CreateCapsuleActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Log.w(TAG, "Error adding document", e);
+                                        mProgressBar.setVisibility(View.GONE);
                                     }
                                 });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mProgressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -173,8 +192,12 @@ public class CreateCapsuleActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
-            return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, myDateListener, year, month, day);
+
+            // Disable past days from current day
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+            return datePickerDialog;
         }
         return null;
     }
