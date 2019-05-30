@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ContributeActivity">
-
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,8 +15,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-
-
 </android.support.constraint.ConstraintLayout> -->
 
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,80 +25,114 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_add_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:onClick="showNoteText"
+            android:text="@string/contribute_add_notes" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_note"
+            android:visibility="gone"
+            android:hint="@string/contribute_note_hint"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/is_note_private"
+            android:text="@string/contribute_is_private"
+            android:textSize="24sp"
+            android:visibility="gone"
+            />
 
         <Button
-                android:id="@+id/button_add_notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showNoteText"
-                android:text="@string/contribute_add_notes" />
-
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_text_note"
-                    android:visibility="gone"
-                    android:hint="@string/contribute_note_hint"
-                    />
-
-            <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/is_note_private"
-                    android:text="@string/contribute_is_private"
-                    android:textSize="24sp"
-                    android:visibility="gone"
-                    />
-
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button_submit_note"
-                    android:text="@string/contribute_submit"
-                    android:visibility="gone"
-                    android:onClick="submitNote"
-                    />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_submit_note"
+            android:text="@string/contribute_submit"
+            android:visibility="gone"
+            android:onClick="submitNote"
+            />
 
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showPictureFields"
-                android:text="@string/contribute_add_pictures"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showPictureFields"
+            android:text="@string/contribute_add_pictures" />
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/choose_picture_hint"
-                    android:id="@+id/choose_picture_hint_text"
-                    android:visibility="gone"
-                    />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_picture_hint"
+            android:id="@+id/choose_picture_hint_text"
+            android:visibility="gone"
+            />
 
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:id="@+id/picture_view"
-                    android:layout_margin="15dp"
-                    android:onClick="choosePicture"
-                    android:visibility="gone"/>
-
-            <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:text="Submit"
-                    android:onClick="submitPicture"
-                    android:id="@+id/picture_submit_btn"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:id="@+id/picture_view"
+            android:layout_margin="15dp"
+            android:onClick="choosePicture"
+            android:visibility="gone"/>
 
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/contribute_add_videos"
-                android:visibility="gone"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:text="Submit"
+            android:onClick="submitPicture"
+            android:id="@+id/picture_submit_btn"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contribute_add_videos"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/button_add_youtube_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff0000"
+            android:onClick="showYoutubeLinks"
+            android:text="+ YOUTUBE VIDEOS" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_youtube_link"
+            android:visibility="gone"
+            android:hint="Paste your YOUTUBE link here"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/is_note_private2"
+            android:text="@string/contribute_is_private"
+            android:textSize="24sp"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_submit_youtube_link"
+            android:text="Submit!"
+            android:visibility="gone"
+            android:onClick="submitYoutubeLink"
+            />
+
 
         <Button
             android:id="@+id/button_invite_friends"

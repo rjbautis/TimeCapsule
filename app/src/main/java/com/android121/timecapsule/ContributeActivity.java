@@ -46,6 +46,10 @@ public class ContributeActivity extends AppCompatActivity {
     private Button mPictureSubmitButton;
     private Uri file;
 
+    // Youtube Links
+    private EditText mYoutubeLink;
+    private Button mYoutubeSubmitButton;
+
     // Invite Friends
     private Button mInviteFriendButton;
     private EditText mInviteFriendsEditText;
@@ -80,6 +84,11 @@ public class ContributeActivity extends AppCompatActivity {
         mPicture = findViewById(R.id.picture_view);
         mPictureSubmitButton = findViewById(R.id.picture_submit_btn);
 
+        // Youtube Link References
+        mYoutubeLink = (EditText) findViewById(R.id.edit_youtube_link);
+        mYoutubeSubmitButton = (Button) findViewById(R.id.button_submit_youtube_link);
+
+
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
 
@@ -110,6 +119,20 @@ public class ContributeActivity extends AppCompatActivity {
             mNoteIsPrivate.setVisibility(CheckBox.VISIBLE);
         }
     }
+
+    // Toggles visibility of the youtube links fields when the youtube button is clicked
+    public void showYoutubeLinks(View v) {
+        // Toggle visibility of the fields
+        if(mYoutubeLink.getVisibility() == EditText.VISIBLE){
+            mYoutubeLink.setVisibility(EditText.GONE);
+            mYoutubeSubmitButton.setVisibility(Button.GONE);
+        } else {
+            mYoutubeLink.setVisibility(EditText.VISIBLE);
+            mYoutubeSubmitButton.setVisibility(Button.VISIBLE);
+        }
+    }
+
+
 
     public void showInviteFriends(View v) {
 
@@ -220,6 +243,53 @@ public class ContributeActivity extends AppCompatActivity {
 
     }
 
+
+    // Posts note to database and collapses fields
+    public void submitYoutubeLink(View V){
+
+        // Get link from editText
+        String link = mYoutubeLink.getText().toString();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = null;
+        }
+
+        // Create Document to enter into database
+        Contribution contribution = new Contribution(link, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "yt_video");
+
+        // Insert document into contributions table
+        db.collection("contributions")
+                .add(contribution)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        // Collapse fields
+        mYoutubeLink.setVisibility(EditText.GONE);
+        mYoutubeSubmitButton.setVisibility(Button.GONE);
+
+        // Show toast message to confirm submission
+        Toast noteSubmittedToast = new Toast(this);
+        noteSubmittedToast.makeText(this, "YOUTUBE link submitted!", Toast.LENGTH_SHORT).show();
+
+    }
 
     public void showPictureFields(View view) {
         if (mPicture.getVisibility() == View.GONE) {
