@@ -22,6 +22,9 @@
         <activity android:name=".OpenActivity" />
         <activity android:name=".EditActivity" />
         <activity android:name=".HomeActivity" />
+
+        <activity android:name=".YoutubeActivity"></activity>
+
         <activity android:name=".ViewActivity" />
         <activity android:name=".CreateCapsuleActivity" />
         <activity android:name=".ContributeActivity" />

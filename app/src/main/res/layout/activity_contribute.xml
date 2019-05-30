@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -8,9 +9,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
                 android:id="@+id/button_add_notes"
@@ -77,11 +78,47 @@
                     android:id="@+id/picture_submit_btn"/>
 
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/contribute_add_videos"
-                android:visibility="gone"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contribute_add_videos"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/button_add_youtube_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff0000"
+            android:onClick="showYoutubeLinks"
+            android:text="+ YOUTUBE VIDEOS" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_youtube_link"
+            android:visibility="gone"
+            android:hint="Paste your YOUTUBE link here"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/is_note_private2"
+            android:text="@string/contribute_is_private"
+            android:textSize="24sp"
+            android:visibility="gone"
+            />
+>>>>>>> 1eb45088fa46c93ad785e447b51560762d22d8c6
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_submit_youtube_link"
+            android:text="Submit!"
+            android:visibility="gone"
+            android:onClick="submitYoutubeLink"
+            />
+
 
         <Button
             android:id="@+id/button_invite_friends"
