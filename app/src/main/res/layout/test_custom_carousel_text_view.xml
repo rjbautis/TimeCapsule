@@ -45,6 +45,13 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/carousel_youtube_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
     <TextView
         android:id="@+id/carousel_donor_view"
         android:layout_width="wrap_content"
@@ -53,8 +60,9 @@
         android:text=""
         android:textSize="24sp"
         android:visibility="visible"
-
         />
+
+
 
     <Button
         android:layout_width="wrap_content"

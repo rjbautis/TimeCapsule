@@ -20,6 +20,10 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,11 +39,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class OpenCapsuleActivity extends AppCompatActivity {
+public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
 
-    private static final String TAG = testCustomCarouselActivity.class.getSimpleName();
+    private static final String TAG = OpenCapsuleActivity.class.getSimpleName();
     CarouselView customCarouselView;
     int NUMBER_OF_PAGES = 5;
     private FirebaseFirestore db;
@@ -125,8 +131,9 @@ public class OpenCapsuleActivity extends AppCompatActivity {
                                                       ImageView imageView = customView.findViewById(R.id.carousel_image_view);
                                                       VideoView videoView = customView.findViewById(R.id.carousel_video_view);
                                                       TextView donorView = customView.findViewById(R.id.carousel_donor_view);
+                                                      YouTubePlayerView youtubeView = customView.findViewById(R.id.carousel_youtube_view);
                                                       if(position < contributionList.size()) {
-                                                          ContributionItem currentContribution = contributionList.get(position);
+                                                          final ContributionItem currentContribution = contributionList.get(position);
                                                           if(currentContribution.type.equals("text")){
                                                               textView.setText(currentContribution.content);
                                                               textView.setVisibility(TextView.VISIBLE);
@@ -147,6 +154,36 @@ public class OpenCapsuleActivity extends AppCompatActivity {
                                                               mediaController.setAnchorView(videoView);
 
                                                               params.addRule(RelativeLayout.BELOW, R.id.carousel_video_view);
+                                                          } else if (currentContribution.type.equals("yt_video")){
+
+                                                              String pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|watch\\?v%3D|%2Fvideos%2F|embed%2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
+
+                                                              Pattern compiledPattern = Pattern.compile(pattern);
+                                                              Matcher matcher = compiledPattern.matcher(currentContribution.content);
+
+                                                              final String yt_link;
+                                                              if(matcher.find()){
+                                                                  yt_link =  matcher.group();
+                                                              } else {
+                                                                  yt_link = "";
+                                                              }
+
+                                                              YouTubePlayer.OnInitializedListener ytListener = new YouTubePlayer.OnInitializedListener() {
+                                                                  @Override
+                                                                  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                                                                      Log.d(TAG, "Youtube initialization success!");
+                                                                      Log.d(TAG, "yt_link = " + yt_link);
+                                                                      youTubePlayer.cueVideo(yt_link);
+                                                                  }
+
+                                                                  @Override
+                                                                  public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                                                                      Log.d(TAG, "Youtube initialization failure!");
+                                                                  }
+                                                              };
+                                                              youtubeView.initialize(youtube_config.YOUTUBE_API_KEY, ytListener);
+                                                              youtubeView.setVisibility(View.VISIBLE);
+
                                                           }
 
 
