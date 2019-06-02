@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OpenActivity"
-    android:background="@android:color/holo_blue_bright">
+    android:background="#FFE766">
 
     <TextView
         android:id="@+id/congrats"
@@ -15,9 +15,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/days_one"
         android:text="Congratulations!"
-        android:textColor="@color/colorRed"
-        android:textSize="45sp"
+        android:textColor="#3F51B5"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,9 +35,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/days_one"
         android:text="You have capsules waiting to be opened!"
         android:textAlignment="center"
-        android:textSize="22sp"
+        android:textColorLink="#00802A2A"
+        android:textSize="24sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +79,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745"
+        app:layout_constraintVertical_bias="0.839"
         app:srcCompat="@drawable/box4" />
 
     <TextView
@@ -87,9 +90,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Click your the icon below to open your capsules!"
+        android:fontFamily="@font/days_one"
+        android:text="Click the icon below to open your present!"
         android:textAlignment="center"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
