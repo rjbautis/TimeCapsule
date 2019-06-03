@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ViewOpenCapsulesAdapter extends RecyclerView.Adapter<ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder> {
-    private ArrayList<EditItem> openCapsules;
+    private ArrayList<CapsuleItem> openCapsules;
     private Context mContext;
 
     public static class ViewOpenCapsulesHolder extends RecyclerView.ViewHolder{
@@ -34,7 +34,7 @@ public class ViewOpenCapsulesAdapter extends RecyclerView.Adapter<ViewOpenCapsul
         }
     }
 
-    public ViewOpenCapsulesAdapter(ArrayList<EditItem> openCapsules, Context context) {
+    public ViewOpenCapsulesAdapter(ArrayList<CapsuleItem> openCapsules, Context context) {
         mContext = context;
         this.openCapsules = openCapsules;
     }
@@ -42,13 +42,13 @@ public class ViewOpenCapsulesAdapter extends RecyclerView.Adapter<ViewOpenCapsul
     @NonNull
     @Override
     public ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.example_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.capsule_item, viewGroup, false);
         return new ViewOpenCapsulesHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewOpenCapsulesAdapter.ViewOpenCapsulesHolder viewOpenCapsulesHolder, int position) {
-        final EditItem currentItem = openCapsules.get(position);
+        final CapsuleItem currentItem = openCapsules.get(position);
 
         viewOpenCapsulesHolder.mImageView.setImageResource(currentItem.getImageResource());
         viewOpenCapsulesHolder.mCapsuleName.setText(currentItem.getCapsuleName());

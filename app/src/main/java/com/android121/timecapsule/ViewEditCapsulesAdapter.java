@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHolder> {
+public class ViewEditCapsulesAdapter extends RecyclerView.Adapter<ViewEditCapsulesAdapter.ExampleViewHolder> {
 
-    private ArrayList<EditItem> mExampleList;
+    private ArrayList<CapsuleItem> mExampleList;
     private Context mContext;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder{
@@ -35,21 +35,21 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ExampleViewHol
         }
     }
 
-    public EditAdapter(ArrayList<EditItem> exampleList, Context context) {
+    public ViewEditCapsulesAdapter(ArrayList<CapsuleItem> exampleList, Context context) {
         mContext = context;
         mExampleList = exampleList;
     }
 
     @NonNull
     @Override
-    public EditAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.example_item, viewGroup, false);
+    public ViewEditCapsulesAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.capsule_item, viewGroup, false);
         return new ExampleViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EditAdapter.ExampleViewHolder exampleViewHolder, int position) {
-        final EditItem currentItem = mExampleList.get(position);
+    public void onBindViewHolder(@NonNull ViewEditCapsulesAdapter.ExampleViewHolder exampleViewHolder, int position) {
+        final CapsuleItem currentItem = mExampleList.get(position);
 
         exampleViewHolder.mImageView.setImageResource(currentItem.getImageResource());
         exampleViewHolder.mCapsuleName.setText(currentItem.getCapsuleName());

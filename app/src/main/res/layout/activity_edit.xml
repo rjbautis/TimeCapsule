@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#D3D3D3"
-        tools:context=".EditActivity">
+        tools:context=".ViewEditCapsulesActivity">
 
         <ProgressBar
                 style="@android:style/Widget.Material.ProgressBar"

@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class ViewOpenCapsulesActivity extends AppCompatActivity {
@@ -30,7 +32,7 @@ public class ViewOpenCapsulesActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-    private ArrayList<EditItem> exampleList = new ArrayList<>();
+    private ArrayList<CapsuleItem> capsuleItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,12 @@ public class ViewOpenCapsulesActivity extends AppCompatActivity {
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        // Only show capsules that are ready to be opened (i.e. are less than or equal to current date)
+        Date today = Calendar.getInstance().getTime();
+
         db.collection("capsules")
                 .whereEqualTo("recipientId", currentUser.getUid())
+                .whereLessThanOrEqualTo("openDate", today)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -63,17 +69,17 @@ public class ViewOpenCapsulesActivity extends AppCompatActivity {
                                 Capsule capsule = document.toObject(Capsule.class);
 
                                 // Only retrieve capsules that user was invited to
-                                EditItem item = new EditItem(R.drawable.download, capsule.capsuleName, capsule.openDate.toLocaleString());
+                                CapsuleItem item = new CapsuleItem(R.drawable.download, capsule.capsuleName, capsule.openDate.toLocaleString());
 
                                 // Set the id of the item for usage
                                 item.setCapsuleId(document.getId());
-                                exampleList.add(item);
+                                capsuleItems.add(item);
                             }
 
                             mProgressBar.setVisibility(View.GONE);
 
                             // Set adapter after all documents have been added to list
-                            mAdapter = new ViewOpenCapsulesAdapter(exampleList, ViewOpenCapsulesActivity.this);
+                            mAdapter = new ViewOpenCapsulesAdapter(capsuleItems, ViewOpenCapsulesActivity.this);
                             mRecyclerView.setAdapter(mAdapter);
                         }
                     }
