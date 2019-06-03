@@ -11,44 +11,50 @@
         android:roundIcon="@mipmap/logo_word"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SpotifyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".testCustomCarouselActivity">
             android:screenOrientation="portrait"
         </activity>
         <activity android:name=".testCarouselActivity">
             android:screenOrientation="portrait"
         </activity>
-        <activity android:name=".ViewOpenCapsulesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenCapsuleActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".EditActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".ViewOpenCapsulesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenCapsuleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".YoutubeActivity">
             android:screenOrientation="portrait"
         </activity>
-
-        <activity android:name=".ViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CreateCapsuleActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ContributeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".LoginActivity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".SignUpActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateCapsuleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ContributeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
