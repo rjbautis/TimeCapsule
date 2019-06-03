@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class ViewEditCapsulesActivity extends AppCompatActivity {
@@ -68,9 +70,13 @@ public class ViewEditCapsulesActivity extends AppCompatActivity {
 
                             Log.d(TAG, "size of invitations: " + invitedCapsuleIdList.size());
 
+                            // Only show invited capsules where open date has not yet passed (i.e. are greater than or equal to current date)
+                            Date today = Calendar.getInstance().getTime();
+
                             // Retrieve all capsules
                             // TODO: only want to retrieve capsules that user was invited to
                             db.collection("capsules")
+                                    .whereGreaterThanOrEqualTo("openDate", today)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
