@@ -1,6 +1,6 @@
 package com.android121.timecapsule;
 
-public class EditItem {
+public class CapsuleItem {
     private int imageResource;
     private String capsuleName;
     private String openDate;
@@ -9,7 +9,7 @@ public class EditItem {
     private String capsuleId;
 
 
-    public EditItem(int ImageResource, String capsuleName, String openDate) {
+    public CapsuleItem(int ImageResource, String capsuleName, String openDate) {
         this.imageResource = ImageResource;
         this.capsuleName = capsuleName;
         this.openDate = openDate;

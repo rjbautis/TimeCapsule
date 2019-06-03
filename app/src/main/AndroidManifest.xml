@@ -23,7 +23,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".OpenActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".EditActivity"
+        <activity android:name=".ViewEditCapsulesActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".HomeActivity"
             android:screenOrientation="portrait"/>
@@ -32,10 +32,8 @@
             android:screenOrientation="portrait"
         </activity>
 
-        <activity android:name=".ViewActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".CreateCapsuleActivity"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".ContributeActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".LoginActivity">
