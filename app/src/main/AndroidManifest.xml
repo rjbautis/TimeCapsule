@@ -11,26 +11,31 @@
         android:roundIcon="@mipmap/logo_word"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".testCustomCarouselActivity">
-            android:screenOrientation="portrait"
-        </activity>
-        <activity android:name=".testCarouselActivity">
-            android:screenOrientation="portrait"
-        </activity>
-        <activity android:name=".ViewOpenCapsulesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenCapsuleActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OpenActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ViewEditCapsulesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomeActivity"
+
+        <activity android:name=".testCustomCarouselActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".YoutubeActivity">
+        <activity android:name=".testCarouselActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ViewOpenCapsulesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".OpenCapsuleActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".OpenActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ViewEditCapsulesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".HomeActivity"
             android:screenOrientation="portrait"
-        </activity>
+        />
+
+        <activity android:name=".YoutubeActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".CreateCapsuleActivity"
                   android:screenOrientation="portrait"/>
