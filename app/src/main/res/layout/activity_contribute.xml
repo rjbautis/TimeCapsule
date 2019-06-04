@@ -164,12 +164,12 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/days_one"
                     android:layout_gravity="left"
-                    android:textSize="18dp"
-                    android:paddingLeft="150dp"
-                    android:paddingTop="10dp"
+                    android:textSize="16dp"
+                    android:paddingLeft="120dp"
+                    android:paddingTop="13dp"
                     android:clickable="false"
                     android:textColor="#000000"
-                    android:text="+" />
+                    android:text="ADD" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -246,12 +246,12 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/days_one"
                 android:layout_gravity="left"
-                android:textSize="18dp"
-                android:paddingLeft="130dp"
-                android:paddingTop="10dp"
+                android:textSize="16dp"
+                android:paddingLeft="100dp"
+                android:paddingTop="13dp"
                 android:clickable="false"
                 android:textColor="#000000"
-                android:text="+" />
+                android:text="ADD" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -264,6 +264,53 @@
                 android:clickable="false"
                 android:textColor="#000000"
                 android:text="LINKS" />
+
+        </FrameLayout>
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
+        <!--Paypal Button-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageButton
+                android:background="@drawable/rounded_paypal"
+                android:id="@+id/button_add_paypal_amount"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:adjustViewBounds="true"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/paypal"
+                android:src="@drawable/paypal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="16dp"
+                android:paddingLeft="95dp"
+                android:paddingTop="13dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="SEND" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:paddingLeft="260dp"
+                android:paddingTop="15dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="MONEY" />
 
         </FrameLayout>
 
