@@ -198,17 +198,6 @@
             android:hint="Paste your YOUTUBE link here"
             />
 
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/is_note_private2"
-            android:fontFamily="@font/days_one"
-            android:text="@string/contribute_is_private"
-            android:textSize="24sp"
-            android:visibility="gone"
-            />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,7 +216,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:onClick="showSpotifyLinks"
+                >
 
             <ImageButton
                 android:background="@drawable/rounded_spotify"
@@ -238,6 +228,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:scaleType="fitCenter"
+                android:clickable="false"
                 app:srcCompat="@drawable/spotify"
                 android:src="@drawable/spotify"/>
 
@@ -266,9 +257,33 @@
                 android:text="LINKS" />
 
         </FrameLayout>
+
         <android.support.v4.widget.Space
             android:layout_height="1dp"
             android:layout_width="match_parent" />
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_spotify_link"
+                android:fontFamily="@font/days_one"
+                android:visibility="gone"
+                android:hint="Paste your SPOTIFY link here"
+                />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:id="@+id/button_submit_spotify_link"
+                android:text="Submit!"
+                android:visibility="gone"
+                android:onClick="submitSpotifyLink"
+                />
+
+        <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="match_parent" />
 
         <!--Paypal Button-->
         <FrameLayout
@@ -314,29 +329,9 @@
 
         </FrameLayout>
 
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_spotify_link"
-                android:fontFamily="@font/days_one"
-                android:visibility="gone"
-                android:hint="@string/contribute_note_hint"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_submit_spotify_link"
-                android:fontFamily="@font/days_one"
-                android:text="@string/contribute_submit"
-                android:visibility="gone"
-                android:onClick="preSubmitNote"
-                />
         <android.support.v4.widget.Space
             android:layout_height="1dp"
             android:layout_width="match_parent" />
-
 
         <Button
             android:id="@+id/button_invite_friends"
@@ -347,6 +342,8 @@
             android:onClick="showInviteFriends"
             android:text="Invite Friends!"
             android:textColor="#FFEB3B" />
+
+
         <android.support.v4.widget.Space
             android:layout_height="1dp"
             android:layout_width="match_parent" />

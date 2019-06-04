@@ -2,6 +2,7 @@ package com.android121.timecapsule;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +28,98 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ContributeActivity extends AppCompatActivity {
+
+    private class HttpDownloadTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                // Establish connection
+                URL url = new URL(strings[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                // Set timeout for connection
+                conn.setConnectTimeout(1000);
+                conn.setRequestMethod("GET");
+
+                conn.connect();
+
+                // Read response as string
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                String input;
+                StringBuilder response = new StringBuilder();
+
+                while ((input = bufferedReader.readLine()) != null) {
+                    response.append(input);
+                }
+
+                bufferedReader.close();
+
+                return response.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s == null) {
+                Toast.makeText(ContributeActivity.this, "There was a problem with this link", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+
+                // Spotify-specific tasks
+                String imgUrl = jsonObject.getString("thumbnail_url");
+                String title = jsonObject.getString("title");
+
+                // Add delimiter between imgUrl and title for content
+                String content = imgUrl + "|" + title;
+
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                Contribution contribution = new Contribution(content, mCapsuleId, false, currentUser.getUid(), "spotify", "");
+
+                // Insert video document into contributions table
+                db.collection("contributions")
+                        .add(contribution)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+                toggleSpotifyFields();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
@@ -63,6 +152,10 @@ public class ContributeActivity extends AppCompatActivity {
     // Youtube Links
     private EditText mYoutubeLink;
     private Button mYoutubeSubmitButton;
+
+    // Spotify Links
+    private EditText mSpotifyLink;
+    private Button mSpotifySubmitButton;
 
     // Invite Friends
     private Button mInviteFriendButton;
@@ -125,11 +218,12 @@ public class ContributeActivity extends AppCompatActivity {
         mYoutubeLink = (EditText) findViewById(R.id.edit_youtube_link);
         mYoutubeSubmitButton = (Button) findViewById(R.id.button_submit_youtube_link);
 
+        // Spotify Link References
+        mSpotifyLink = findViewById(R.id.edit_spotify_link);
+        mSpotifySubmitButton = findViewById(R.id.button_submit_spotify_link);
 
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
-
-
     }
 
     @Override
@@ -176,6 +270,21 @@ public class ContributeActivity extends AppCompatActivity {
         } else {
             mYoutubeLink.setVisibility(EditText.VISIBLE);
             mYoutubeSubmitButton.setVisibility(Button.VISIBLE);
+        }
+    }
+
+    public void showSpotifyLinks(View view) {
+        toggleSpotifyFields();
+    }
+
+
+    private void toggleSpotifyFields() {
+        if (mSpotifyLink.getVisibility() == View.VISIBLE) {
+            mSpotifyLink.setVisibility(View.GONE);
+            mSpotifySubmitButton.setVisibility(View.GONE);
+        } else {
+            mSpotifyLink.setVisibility(View.VISIBLE);
+            mSpotifySubmitButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -440,6 +549,25 @@ public class ContributeActivity extends AppCompatActivity {
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, "YOUTUBE link submitted!", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void submitSpotifyLink(View view) {
+        if (mSpotifyLink.getText().length() == 0) {
+            Toast.makeText(this, "Enter a valid URL", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Get Spotify link from editText
+        String link = mSpotifyLink.getText().toString();
+
+        // Extract track ID from link by splitting on ?
+        String newLink = link.split("\\?")[0];
+        String[] tmp = newLink.split("/");
+        String id = tmp[tmp.length - 1];
+
+        // Execute async task in background thread
+        HttpDownloadTask downloadTask = new HttpDownloadTask();
+        downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id);
     }
 
     public void showPictureFields(View view) {
