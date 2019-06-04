@@ -39,10 +39,10 @@ import java.net.URL;
 
 public class ContributeActivity extends AppCompatActivity {
 
-    private class HttpDownloadTask extends AsyncTask<String, Void, String> {
+    private class HttpDownloadTask extends AsyncTask<String, Void, String[]> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String[] doInBackground(String... strings) {
             try {
                 // Establish connection
                 URL url = new URL(strings[0]);
@@ -66,7 +66,11 @@ public class ContributeActivity extends AppCompatActivity {
 
                 bufferedReader.close();
 
-                return response.toString();
+                String[] args = new String[2];
+                args[0] = strings[1];
+                args[1] = response.toString();
+
+                return args;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -74,23 +78,23 @@ public class ContributeActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String[] s) {
             super.onPostExecute(s);
 
-            if (s == null) {
+            if (s == null || s[1] == null) {
                 Toast.makeText(ContributeActivity.this, "There was a problem with this link", Toast.LENGTH_LONG).show();
                 return;
             }
 
             try {
-                JSONObject jsonObject = new JSONObject(s);
+                JSONObject jsonObject = new JSONObject(s[1]);
 
                 // Spotify-specific tasks
                 String imgUrl = jsonObject.getString("thumbnail_url");
                 String title = jsonObject.getString("title");
 
-                // Add delimiter between imgUrl and title for content
-                String content = imgUrl + "|" + title;
+                // Add delimiter between url, imgUrl and title for content
+                String content = s[0] + "|" + imgUrl + "|" + title;
 
                 FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -119,7 +123,6 @@ public class ContributeActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
@@ -567,7 +570,7 @@ public class ContributeActivity extends AppCompatActivity {
 
         // Execute async task in background thread
         HttpDownloadTask downloadTask = new HttpDownloadTask();
-        downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id);
+        downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id, link);
     }
 
     public void showPictureFields(View view) {
