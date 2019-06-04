@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         mGotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, EditActivity.class));
+                startActivity(new Intent(HomeActivity.this, ViewEditCapsulesActivity.class));
             }
         });
 
