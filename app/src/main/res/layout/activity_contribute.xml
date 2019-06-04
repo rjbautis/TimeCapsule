@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFE766">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +15,12 @@
         android:orientation="vertical">
 
         <Button
-                android:id="@+id/button_add_notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showNoteText"
-                android:text="@string/contribute_add_notes" />
+            android:id="@+id/button_add_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
+            android:onClick="showNoteText"
+            android:text="@string/contribute_add_notes" />
 
             <EditText
                     android:layout_width="match_parent"
@@ -47,11 +49,11 @@
                     />
 
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showPictureFields"
-                android:text="@string/contribute_add_pictures"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
+            android:onClick="showPictureFields"
+            android:text="@string/contribute_add_pictures" />
 
             <TextView
                     android:layout_width="match_parent"
@@ -80,9 +82,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
             android:onClick="showVideoFields"
-            android:text="@string/contribute_add_videos"
-            />
+            android:text="@string/contribute_add_videos" />
 
             <TextView
                     android:layout_width="match_parent"
@@ -120,6 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ff0000"
+            android:fontFamily="@font/days_one"
             android:onClick="showYoutubeLinks"
             android:text="+ YOUTUBE VIDEOS" />
 
@@ -154,6 +157,7 @@
             android:id="@+id/button_invite_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
             android:onClick="showInviteFriends"
             android:text="Invite Friends!" />
 
@@ -178,6 +182,7 @@
             android:id="@+id/button_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
             android:onClick="finishContributing"
             android:text="Finish" />
 
