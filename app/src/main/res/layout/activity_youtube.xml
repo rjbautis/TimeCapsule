@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".YoutubeActivity">
+    tools:context=".YoutubeActivity"
+    android:background="#FFE766">
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_view"
