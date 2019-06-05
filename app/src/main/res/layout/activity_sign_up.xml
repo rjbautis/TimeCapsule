@@ -16,40 +16,44 @@
             android:orientation="vertical">
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="@string/name_hint"
-                android:ems="10"
-                android:id="@+id/nameEditText"/>
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/name_hint"
+            android:inputType="textPersonName" />
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/email_hint"
-                android:ems="10"
-                android:id="@+id/newEmailEditText"/>
+            android:id="@+id/newEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/password_hint"
-                android:ems="10"
-                android:id="@+id/newPasswordEditText"/>
+            android:id="@+id/newPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/confirm_password_hint"
-                android:ems="10"
-                android:id="@+id/confirmPasswordField"/>
+            android:id="@+id/confirmPasswordField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword" />
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"
@@ -61,10 +65,11 @@
                 android:visibility="invisible"/>
 
         <Button
-                android:text="@string/sign_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onSignUp"
-                android:id="@+id/signUpBtn"/>
+            android:id="@+id/signUpBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
+            android:onClick="onSignUp"
+            android:text="@string/sign_up" />
     </LinearLayout>
 </ScrollView>

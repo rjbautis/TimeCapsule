@@ -2,6 +2,7 @@ package com.android121.timecapsule;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +28,101 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ContributeActivity extends AppCompatActivity {
+
+    private class HttpDownloadTask extends AsyncTask<String, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                // Establish connection
+                URL url = new URL(strings[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                // Set timeout for connection
+                conn.setConnectTimeout(1000);
+                conn.setRequestMethod("GET");
+
+                conn.connect();
+
+                // Read response as string
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                String input;
+                StringBuilder response = new StringBuilder();
+
+                while ((input = bufferedReader.readLine()) != null) {
+                    response.append(input);
+                }
+
+                bufferedReader.close();
+
+                String[] args = new String[2];
+                args[0] = strings[1];
+                args[1] = response.toString();
+
+                return args;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] s) {
+            super.onPostExecute(s);
+
+            if (s == null || s[1] == null) {
+                Toast.makeText(ContributeActivity.this, "There was a problem with this link", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            try {
+                JSONObject jsonObject = new JSONObject(s[1]);
+
+                // Spotify-specific tasks
+                String imgUrl = jsonObject.getString("thumbnail_url");
+                String title = jsonObject.getString("title");
+
+                // Add delimiter between url, imgUrl and title for content
+                String content = s[0] + "|" + imgUrl + "|" + title;
+
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                Contribution contribution = new Contribution(content, mCapsuleId, false, currentUser.getUid(), "spotify", "");
+
+                // Insert video document into contributions table
+                db.collection("contributions")
+                        .add(contribution)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+                toggleSpotifyFields();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
@@ -63,6 +155,14 @@ public class ContributeActivity extends AppCompatActivity {
     // Youtube Links
     private EditText mYoutubeLink;
     private Button mYoutubeSubmitButton;
+
+    // Spotify Links
+    private EditText mSpotifyLink;
+    private Button mSpotifySubmitButton;
+
+    // Paypal Links
+    private EditText mPaypalAmount;
+    private Button mPaypalSubmitButton;
 
     // Invite Friends
     private Button mInviteFriendButton;
@@ -125,11 +225,16 @@ public class ContributeActivity extends AppCompatActivity {
         mYoutubeLink = (EditText) findViewById(R.id.edit_youtube_link);
         mYoutubeSubmitButton = (Button) findViewById(R.id.button_submit_youtube_link);
 
+        // Spotify Link References
+        mSpotifyLink = findViewById(R.id.edit_spotify_link);
+        mSpotifySubmitButton = findViewById(R.id.button_submit_spotify_link);
+
+        // Paypal Amount References
+        mPaypalAmount = findViewById(R.id.edit_paypal_amount);
+        mPaypalSubmitButton = findViewById(R.id.button_submit_paypal_amount);
 
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
-
-
     }
 
     @Override
@@ -176,6 +281,32 @@ public class ContributeActivity extends AppCompatActivity {
         } else {
             mYoutubeLink.setVisibility(EditText.VISIBLE);
             mYoutubeSubmitButton.setVisibility(Button.VISIBLE);
+        }
+    }
+
+    public void showSpotifyLinks(View view) {
+        toggleSpotifyFields();
+    }
+    private void toggleSpotifyFields() {
+        if (mSpotifyLink.getVisibility() == View.VISIBLE) {
+            mSpotifyLink.setVisibility(View.GONE);
+            mSpotifySubmitButton.setVisibility(View.GONE);
+        } else {
+            mSpotifyLink.setVisibility(View.VISIBLE);
+            mSpotifySubmitButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void showPayPalAmount(View view) {
+        togglePayPalFields();
+    }
+    private void togglePayPalFields() {
+        if (mPaypalAmount.getVisibility() == View.VISIBLE) {
+            mPaypalAmount.setVisibility(View.GONE);
+            mPaypalSubmitButton.setVisibility(View.GONE);
+        } else {
+            mPaypalAmount.setVisibility(View.VISIBLE);
+            mPaypalSubmitButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -439,6 +570,75 @@ public class ContributeActivity extends AppCompatActivity {
         // Show toast message to confirm submission
         Toast noteSubmittedToast = new Toast(this);
         noteSubmittedToast.makeText(this, "YOUTUBE link submitted!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void submitSpotifyLink(View view) {
+        if (mSpotifyLink.getText().length() == 0) {
+            Toast.makeText(this, "Enter a valid URL", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Get Spotify link from editText
+        String link = mSpotifyLink.getText().toString();
+
+        // Extract track ID from link by splitting on ?
+        String newLink = link.split("\\?")[0];
+        String[] tmp = newLink.split("/");
+        String id = tmp[tmp.length - 1];
+
+        // Execute async task in background thread
+        HttpDownloadTask downloadTask = new HttpDownloadTask();
+        downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id, link);
+    }
+
+    public void submitPayPalAmount(View view, String userName) {
+        //if the user tries to enter a negative money value
+        if (Integer.parseInt(mPaypalAmount.getText().toString()) <= 0) {
+            Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = null;
+        }
+
+        // Get PayPal Amount from editText
+        String amount = (mPaypalAmount.getText().toString());
+
+        Contribution contribution = new Contribution(amount, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "paypal_amount", userName);
+
+        // Insert document into contributions table
+        db.collection("contributions")
+                .add(contribution)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        // Collapse fields
+        mPaypalAmount.setVisibility(EditText.GONE);
+        mPaypalSubmitButton.setVisibility(Button.GONE);
+
+        // Show toast message to confirm submission
+        Toast noteSubmittedToast = new Toast(this);
+        noteSubmittedToast.makeText(this, "Money from PayPal sent successfully!", Toast.LENGTH_SHORT).show();
 
     }
 

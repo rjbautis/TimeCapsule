@@ -17,4 +17,7 @@ class Capsule {
         this.recipientId = recipientId;
         this.capsuleName = capsuleName;
     }
+
+    public static class paypal_config {
+    }
 }

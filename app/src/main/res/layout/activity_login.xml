@@ -24,22 +24,24 @@
                 android:contentDescription="Logo"/>
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/emailEditText"
-                android:hint="@string/email_hint"/>
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
 
         <EditText
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/passwordEditText"
-                android:hint="@string/password_hint"/>
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:fontFamily="@font/days_one"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
 
         <LinearLayout
                 android:layout_marginTop="30dp"
@@ -54,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/days_one"
                 android:onClick="onClick"
                 android:text="@string/sign_up"
                 android:textSize="18sp" />
@@ -64,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/days_one"
                 android:onClick="onClick"
                 android:text="@string/login"
                 android:textSize="18sp" />
@@ -77,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/colorRed"
+            android:fontFamily="@font/days_one"
             android:onClick="onClick"
             android:text="@string/google_sign_in"
             android:textSize="18sp" />

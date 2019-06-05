@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFE766">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,15 +15,22 @@
         android:orientation="vertical">
 
         <Button
-                android:id="@+id/button_add_notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showNoteText"
-                android:text="@string/contribute_add_notes" />
+            android:id="@+id/button_add_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:fontFamily="@font/days_one"
+            android:onClick="showNoteText"
+            android:text="@string/contribute_add_notes"
+            android:textColor="#FFEB3B" />
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
                     android:id="@+id/edit_text_note"
                     android:visibility="gone"
                     android:hint="@string/contribute_note_hint"
@@ -31,6 +39,7 @@
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
                     android:id="@+id/is_note_private"
                     android:text="@string/contribute_is_private"
                     android:textSize="24sp"
@@ -40,6 +49,7 @@
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
                     android:id="@+id/button_submit_note"
                     android:text="@string/contribute_submit"
                     android:visibility="gone"
@@ -47,15 +57,21 @@
                     />
 
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showPictureFields"
-                android:text="@string/contribute_add_pictures"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:fontFamily="@font/days_one"
+            android:onClick="showPictureFields"
+            android:text="@string/contribute_add_pictures"
+            android:textColor="#FFEB3B" />
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
                     android:text="@string/choose_picture_hint"
                     android:id="@+id/choose_picture_hint_text"
                     android:visibility="gone"
@@ -72,6 +88,7 @@
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/days_one"
                     android:visibility="gone"
                     android:text="Submit"
                     android:onClick="preSubmitPicture"
@@ -80,13 +97,19 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:fontFamily="@font/days_one"
             android:onClick="showVideoFields"
             android:text="@string/contribute_add_videos"
-            />
+            android:textColor="#FFEB3B" />
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
                     android:text="@string/choose_video_hint"
                     android:visibility="gone"
                     android:id="@+id/choose_video_hint_text"/>
@@ -104,63 +127,256 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:onClick="chooseVideo"
+                    android:fontFamily="@font/days_one"
                     android:text="@string/select_video"/>
 
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/days_one"
                     android:text="Submit"
                     android:onClick="submitVideo"
                     android:visibility="gone"
                     android:id="@+id/video_submit_btn"/>
 
-
-        <Button
-            android:id="@+id/button_add_youtube_links"
+        <!--YouTube Button-->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ff0000"
+            android:layout_height="match_parent"
             android:onClick="showYoutubeLinks"
-            android:text="+ YOUTUBE VIDEOS" />
+            >
+
+                <ImageButton
+                    android:background="@drawable/rounded_youtube"
+                    android:id="@+id/button_add_youtube_links"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:adjustViewBounds="true"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:scaleType="fitCenter"
+                    android:clickable="false"
+                    app:srcCompat="@drawable/youtube"
+                    android:src="@drawable/youtube"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
+                    android:layout_gravity="left"
+                    android:textSize="16dp"
+                    android:paddingLeft="120dp"
+                    android:paddingTop="13dp"
+                    android:clickable="false"
+                    android:textColor="#000000"
+                    android:text="ADD" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/days_one"
+                    android:layout_gravity="left"
+                    android:textSize="15dp"
+                    android:paddingLeft="250dp"
+                    android:paddingTop="14dp"
+                    android:clickable="false"
+                    android:textColor="#000000"
+                    android:text="LINKS" />
+
+        </FrameLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_youtube_link"
+            android:fontFamily="@font/days_one"
             android:visibility="gone"
             android:hint="Paste your YOUTUBE link here"
-            />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/is_note_private2"
-            android:text="@string/contribute_is_private"
-            android:textSize="24sp"
-            android:visibility="gone"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
             android:id="@+id/button_submit_youtube_link"
             android:text="Submit!"
             android:visibility="gone"
             android:onClick="preSubmitYoutubeLink"
             />
 
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
+        <!--Spotify Button-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="showSpotifyLinks"
+                >
+
+            <ImageButton
+                android:background="@drawable/rounded_spotify"
+                android:id="@+id/button_add_spotify_links"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:adjustViewBounds="true"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:scaleType="fitCenter"
+                android:clickable="false"
+                app:srcCompat="@drawable/spotify"
+                android:src="@drawable/spotify"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="16dp"
+                android:paddingLeft="100dp"
+                android:paddingTop="13dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="ADD" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:paddingLeft="265dp"
+                android:paddingTop="14dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="LINKS" />
+
+        </FrameLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_spotify_link"
+                android:fontFamily="@font/days_one"
+                android:visibility="gone"
+                android:hint="Paste your SPOTIFY link here"
+                />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:id="@+id/button_submit_spotify_link"
+                android:text="Submit!"
+                android:visibility="gone"
+                android:onClick="submitSpotifyLink"
+                />
+
+        <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="match_parent" />
+
+        <!--Paypal Button-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageButton
+                android:background="@drawable/rounded_paypal"
+                android:id="@+id/button_add_paypal_amount"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:adjustViewBounds="true"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/paypal"
+                android:src="@drawable/paypal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="16dp"
+                android:paddingLeft="95dp"
+                android:paddingTop="13dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="SEND" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/days_one"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:paddingLeft="260dp"
+                android:paddingTop="15dp"
+                android:clickable="false"
+                android:textColor="#000000"
+                android:text="MONEY" />
+
+        </FrameLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_paypal_amount"
+            android:fontFamily="@font/days_one"
+            android:visibility="gone"
+            android:hint="Enter the amount of money you'd like to send here:"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
+            android:id="@+id/button_submit_paypal_amount"
+            android:text="Submit!"
+            android:visibility="gone"
+            android:onClick="submitPayPalAmount"
+            />
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
 
         <Button
             android:id="@+id/button_invite_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:fontFamily="@font/days_one"
             android:onClick="showInviteFriends"
-            android:text="Invite Friends!" />
+            android:text="Invite Friends!"
+            android:textColor="#FFEB3B" />
+
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_text_invite_friend"
+            android:fontFamily="@font/days_one"
             android:visibility="gone"
             android:hint="Type your friend's email address."
             />
@@ -169,8 +385,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button_invite_friend"
+            android:fontFamily="@font/days_one"
             android:visibility="gone"
             android:onClick="inviteFriend"
+            android:background="@drawable/rounded"
             android:text="Send invite!"/>
 
 
@@ -178,8 +396,14 @@
             android:id="@+id/button_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:fontFamily="@font/days_one"
             android:onClick="finishContributing"
-            android:text="Finish" />
+            android:text="Finish"
+            android:textColor="#FFEB3B" />
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
 
     </LinearLayout>
