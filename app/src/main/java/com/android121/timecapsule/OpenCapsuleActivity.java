@@ -3,6 +3,7 @@ package com.android121.timecapsule;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,7 +67,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         //mCapsuleId = "dvaOmVVVbVaHXjcjn2AI";
         //mCapsuleId = "PoiSYfSgGABQyuw4l9wH";
         //mCapsuleId = "3csUst4QZOjsrLDupeGT";
-        //mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
+        mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
 
         final Context context = OpenCapsuleActivity.this;
 
@@ -78,11 +80,11 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
         // Get capsule id from bundle
         Bundle extras = getIntent().getExtras();
-
-        if (extras != null) {
-            mCapsuleId = extras.getString("capsuleId");
-            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
-        }
+//
+//        if (extras != null) {
+//            mCapsuleId = extras.getString("capsuleId");
+//            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+//        }
 
         Query findContributionsQuery = db.collection("contributions").whereEqualTo("capsuleId", mCapsuleId);
         findContributionsQuery.get()
@@ -139,10 +141,14 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                       TextView spotifyTitleTextView = customView.findViewById(R.id.carousel_spotify_song_title_view);
                                                       LinearLayout spotifyView = customView.findViewById(R.id.carousel_spotify_view);
                                                       TextView moneyView = customView.findViewById(R.id.carousel_money_view);
+                                                      TextView moneyIdView = customView.findViewById(R.id.carousel_money_id_view);
+                                                      LinearLayout moneyFrameView = customView.findViewById(R.id.carousel_money_frame_view);
+
                                                       if(position < contributionList.size()) {
                                                           final ContributionItem currentContribution = contributionList.get(position);
                                                           if(currentContribution.type.equals("text")){
                                                               textView.setText(currentContribution.content);
+                                                              textView.setTypeface(Typeface.create("days_one", Typeface.NORMAL));
                                                               textView.setVisibility(TextView.VISIBLE);
 
                                                               params.addRule(RelativeLayout.BELOW, R.id.carousel_text_view);
@@ -232,9 +238,13 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                           } else if(currentContribution.type.equals("paypal_amount")) {
                                                               String[] separated = currentContribution.content.split("\\|");
 
-                                                              String moneyString = "$" + separated[0] + "\n Transaction ID:" + separated[1];
+                                                              String moneyString = "You've been sent $" + separated[0];
+                                                              String moneyIdString = "Transaction ID:" + separated[1];
                                                               moneyView.setText(moneyString);
                                                               moneyView.setVisibility(View.VISIBLE);
+                                                              moneyIdView.setText(moneyIdString);
+                                                              moneyIdView.setVisibility(View.VISIBLE);
+                                                              moneyFrameView.setVisibility(View.VISIBLE);
                                                           }
 
 
