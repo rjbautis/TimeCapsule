@@ -2,6 +2,7 @@ package com.android121.timecapsule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -132,6 +133,8 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                       VideoView videoView = customView.findViewById(R.id.carousel_video_view);
                                                       TextView donorView = customView.findViewById(R.id.carousel_donor_view);
                                                       YouTubePlayerView youtubeView = customView.findViewById(R.id.carousel_youtube_view);
+                                                      ImageView spotifyAlbumImageView = customView.findViewById(R.id.carousel_spotify_art_view);
+                                                      TextView spotifyTitleTextView = customView.findViewById(R.id.carousel_spotify_song_title_view);
                                                       if(position < contributionList.size()) {
                                                           final ContributionItem currentContribution = contributionList.get(position);
                                                           if(currentContribution.type.equals("text")){
@@ -184,6 +187,55 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                               youtubeView.initialize(youtube_config.YOUTUBE_API_KEY, ytListener);
                                                               youtubeView.setVisibility(View.VISIBLE);
 
+                                                          } else if (currentContribution.type.equals("spotify")){
+                                                              //get title and art from SpotifyGet(content)
+                                                              final String spotifyUrl = "";
+                                                              String albumArtUrl = "";
+                                                              String songName = "";
+                                                              String artistName = "";
+                                                              String spotifyText = songName + " - " + artistName;
+
+                                                              // set spotifyAlbumImageView
+                                                              Glide.with(context).load(albumArtUrl).into(spotifyAlbumImageView);
+                                                              spotifyAlbumImageView.setVisibility(TextView.VISIBLE);
+                                                              spotifyAlbumImageView.setOnClickListener(new View.OnClickListener() {
+                                                                  @Override
+                                                                  public void onClick(View v) {
+
+                                                                      PackageManager pm = getPackageManager();
+                                                                      boolean isSpotifyInstalled;
+                                                                      try {
+                                                                          pm.getPackageInfo("com.spotify.music", 0);
+                                                                          isSpotifyInstalled = true;
+                                                                      } catch (PackageManager.NameNotFoundException e) {
+                                                                          isSpotifyInstalled = false;
+                                                                      }
+
+                                                                      if(isSpotifyInstalled){
+                                                                          Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                                          intent.setData(Uri.parse("spotify:album:0sNOF9WDwhWunNAHPD3Baj"));
+                                                                          intent.putExtra(Intent.EXTRA_REFERRER,
+                                                                                  Uri.parse("android-app://" + context.getPackageName()));
+                                                                          startActivity(intent);
+                                                                      } else {
+                                                                          Uri spotifyWebpage = Uri.parse(spotifyUrl);
+                                                                          Intent intent = new Intent(Intent.ACTION_VIEW, spotifyWebpage);
+                                                                          if (intent.resolveActivity(getPackageManager()) != null) {
+                                                                              startActivity(intent);
+                                                                          }
+
+                                                                      }
+
+
+                                                                  }
+                                                              });
+
+                                                              // set spotifyTitleTextView
+                                                              spotifyTitleTextView.setText(spotifyText);
+                                                              spotifyTitleTextView.setVisibility(TextView.VISIBLE);
+
+
+                                                              // set touch listener to link to spotify
                                                           }
 
 
@@ -207,6 +259,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
                                               customCarouselView.setViewListener(viewListener);
                                               customCarouselView.setPageCount(contributionList.size());
+
                                           }
                                       }
                 );
