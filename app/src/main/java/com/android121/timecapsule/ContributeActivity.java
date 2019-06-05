@@ -39,6 +39,8 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -142,6 +144,7 @@ public class ContributeActivity extends AppCompatActivity {
     private static final int RC_IMAGE_PICKER = 101;
     private static final int RC_VIDEO_PICKER = 102;
     static  String uName = "";
+    static String recipientEmail;
 
     private String mCapsuleId;
     private FirebaseFirestore db;
@@ -278,6 +281,7 @@ public class ContributeActivity extends AppCompatActivity {
         mPaypalAmount = findViewById(R.id.edit_paypal_amount);
         mPaypalSubmitButton = findViewById(R.id.button_submit_paypal_amount);
         amount = "";
+        recipientEmail = "";
 
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
@@ -375,14 +379,53 @@ public class ContributeActivity extends AppCompatActivity {
 
     public void processPayment(View v) {
         amount = mPaypalAmount.getText().toString();
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "USD",
-                // NOTE: REPLACE TIMECAPSULE@test.com with the recipient email
-                // TODO: REPLACE EMAIL WITH REAL EMAIL
-                "Donate to TimeCapsule@test.com", PayPalPayment.PAYMENT_INTENT_SALE);
-        Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
-        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+        String useremail;
+
+
+        DocumentReference docRef = db.collection("capsules").document(mCapsuleId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        DocumentReference docRef = db.collection("users").document(document.getString("recipientId"));
+                        docRef.get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                        Log.d(TAG, "Query returned : ");
+                                        DocumentSnapshot userDocument = task.getResult();
+                                        recipientEmail = userDocument.getString("email");
+
+
+                                        String donateString = "Donate to " + recipientEmail;
+                                        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "USD",
+                                                // NOTE: REPLACE TIMECAPSULE@test.com with the recipient email
+
+                                                donateString, PayPalPayment.PAYMENT_INTENT_SALE);
+                                        Intent intent = new Intent(ContributeActivity.this, PaymentActivity.class);
+                                        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                                        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+                                        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+                                    }
+
+                                });
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+
+
+
     }
 
     // Toggles visibility of the note fields when the notes button is clicked
