@@ -11,7 +11,6 @@
 <com.synnapps.carouselview.CarouselView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/custom_carousel_view"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:fillColor="#FFFFFFFF"
@@ -24,64 +23,88 @@
 
     <TextView
         android:id="@+id/carousel_text_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text=""
         android:textSize="36sp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/carousel_money_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text=""
         android:textSize="36sp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <ImageView
         android:id="@+id/carousel_image_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <VideoView
         android:id="@+id/carousel_video_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/carousel_youtube_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_gravity="center"/>
 
     <LinearLayout
+        android:id="@+id/carousel_spotify_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:id="@+id/carousel_spotify_view"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
+            android:id="@+id/carousel_spotify_art_view"
+
+            android:fontFamily="@font/days_one"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/carousel_spotify_art_view"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
+            android:id="@+id/carousel_spotify_song_title_view"
+
+            android:fontFamily="@font/days_one"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/carousel_spotify_song_title_view"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textSize="24sp"
             />
 
@@ -92,6 +115,12 @@
 
     <TextView
         android:id="@+id/carousel_donor_view"
+
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/paypal"
+        app:srcCompat="@drawable/paypal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -103,10 +132,12 @@
 
 
     <Button
+        android:fontFamily="@font/days_one"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Exit"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
 </com.synnapps.carouselview.CarouselView>

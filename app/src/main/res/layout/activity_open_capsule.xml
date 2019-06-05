@@ -4,7 +4,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-tools:context=".OpenCapsuleActivity">
+tools:context=".OpenCapsuleActivity"
+    android:background="#FFE766">
 
 <com.synnapps.carouselview.CarouselView
     android:id="@+id/carouselView"
