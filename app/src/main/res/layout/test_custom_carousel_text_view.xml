@@ -52,19 +52,32 @@
         android:visibility="gone"
         android:layout_gravity="center"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/carousel_spotify_art_view"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:id="@+id/carousel_spotify_view"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/carousel_spotify_song_title_view"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/carousel_spotify_art_view"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/carousel_spotify_song_title_view"
+            android:visibility="gone"
+            android:textSize="24sp"
+            />
+
+
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/carousel_donor_view"

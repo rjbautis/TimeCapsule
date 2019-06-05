@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -64,6 +65,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         //mCapsuleId = "dvaOmVVVbVaHXjcjn2AI";
         //mCapsuleId = "PoiSYfSgGABQyuw4l9wH";
         //mCapsuleId = "3csUst4QZOjsrLDupeGT";
+        mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
 
         final Context context = OpenCapsuleActivity.this;
 
@@ -77,10 +79,10 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         // Get capsule id from bundle
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            mCapsuleId = extras.getString("capsuleId");
-            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
-        }
+//        if (extras != null) {
+//            mCapsuleId = extras.getString("capsuleId");
+//            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+//        }
 
         Query findContributionsQuery = db.collection("contributions").whereEqualTo("capsuleId", mCapsuleId);
         findContributionsQuery.get()
@@ -135,6 +137,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                       YouTubePlayerView youtubeView = customView.findViewById(R.id.carousel_youtube_view);
                                                       ImageView spotifyAlbumImageView = customView.findViewById(R.id.carousel_spotify_art_view);
                                                       TextView spotifyTitleTextView = customView.findViewById(R.id.carousel_spotify_song_title_view);
+                                                      LinearLayout spotifyView = customView.findViewById(R.id.carousel_spotify_view);
                                                       if(position < contributionList.size()) {
                                                           final ContributionItem currentContribution = contributionList.get(position);
                                                           if(currentContribution.type.equals("text")){
@@ -189,53 +192,45 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
                                                           } else if (currentContribution.type.equals("spotify")){
                                                               //get title and art from SpotifyGet(content)
-                                                              final String spotifyUrl = "";
-                                                              String albumArtUrl = "";
-                                                              String songName = "";
-                                                              String artistName = "";
-                                                              String spotifyText = songName + " - " + artistName;
+
+                                                              String[] separated = currentContribution.content.split("\\|");
+
+                                                              final String spotifyUrl = separated[0];
+                                                              Log.d(TAG, spotifyUrl);
+                                                              String albumArtUrl = separated[1];
+                                                              Log.d(TAG, albumArtUrl);
+                                                              String songName = separated[2];
+                                                              Log.d(TAG, songName);
+                                                              //String artistName = "";
+                                                              //String spotifyText = songName + " - " + artistName;
 
                                                               // set spotifyAlbumImageView
                                                               Glide.with(context).load(albumArtUrl).into(spotifyAlbumImageView);
-                                                              spotifyAlbumImageView.setVisibility(TextView.VISIBLE);
+                                                              spotifyAlbumImageView.setVisibility(ImageView.VISIBLE);
                                                               spotifyAlbumImageView.setOnClickListener(new View.OnClickListener() {
                                                                   @Override
                                                                   public void onClick(View v) {
 
-                                                                      PackageManager pm = getPackageManager();
-                                                                      boolean isSpotifyInstalled;
-                                                                      try {
-                                                                          pm.getPackageInfo("com.spotify.music", 0);
-                                                                          isSpotifyInstalled = true;
-                                                                      } catch (PackageManager.NameNotFoundException e) {
-                                                                          isSpotifyInstalled = false;
-                                                                      }
-
-                                                                      if(isSpotifyInstalled){
-                                                                          Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                                          intent.setData(Uri.parse("spotify:album:0sNOF9WDwhWunNAHPD3Baj"));
-                                                                          intent.putExtra(Intent.EXTRA_REFERRER,
-                                                                                  Uri.parse("android-app://" + context.getPackageName()));
-                                                                          startActivity(intent);
-                                                                      } else {
                                                                           Uri spotifyWebpage = Uri.parse(spotifyUrl);
                                                                           Intent intent = new Intent(Intent.ACTION_VIEW, spotifyWebpage);
                                                                           if (intent.resolveActivity(getPackageManager()) != null) {
                                                                               startActivity(intent);
                                                                           }
 
-                                                                      }
-
 
                                                                   }
                                                               });
 
                                                               // set spotifyTitleTextView
-                                                              spotifyTitleTextView.setText(spotifyText);
+                                                              spotifyTitleTextView.setText(songName);
                                                               spotifyTitleTextView.setVisibility(TextView.VISIBLE);
+                                                              spotifyView.setVisibility(LinearLayout.VISIBLE);
 
 
                                                               // set touch listener to link to spotify
+                                                          } else if(currentContribution.type.equals("paypal_amount")) {
+                                                              String moneyString = "$" + currentContribution.content;
+                                                              textView.setText(moneyString);
                                                           }
 
 
