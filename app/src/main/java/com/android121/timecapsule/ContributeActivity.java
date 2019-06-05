@@ -98,7 +98,7 @@ public class ContributeActivity extends AppCompatActivity {
 
                 FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                Contribution contribution = new Contribution(content, mCapsuleId, false, currentUser.getUid(), "spotify", "");
+                Contribution contribution = new Contribution(content, mCapsuleId, false, currentUser.getUid(), "spotify", uName);
 
                 // Insert video document into contributions table
                 db.collection("contributions")
@@ -128,6 +128,7 @@ public class ContributeActivity extends AppCompatActivity {
 
     private static final int RC_IMAGE_PICKER = 101;
     private static final int RC_VIDEO_PICKER = 102;
+    static  String uName = "";
 
     private String mCapsuleId;
     private FirebaseFirestore db;
@@ -187,6 +188,18 @@ public class ContributeActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        final String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = "";
+        }
+
         DocumentReference docRef = db.collection("capsules").document(mCapsuleId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -196,6 +209,24 @@ public class ContributeActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         setTitle(document.get("capsuleName").toString());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        DocumentReference userDocRef = db.collection("users").document(senderId);
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        uName = document.get("name").toString();
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -592,7 +623,7 @@ public class ContributeActivity extends AppCompatActivity {
         downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id, link);
     }
 
-    public void submitPayPalAmount(View view, String userName) {
+    public void submitPayPalAmount(View view) {
         //if the user tries to enter a negative money value
         if (Integer.parseInt(mPaypalAmount.getText().toString()) <= 0) {
             Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_LONG).show();
@@ -614,7 +645,7 @@ public class ContributeActivity extends AppCompatActivity {
         // Get PayPal Amount from editText
         String amount = (mPaypalAmount.getText().toString());
 
-        Contribution contribution = new Contribution(amount, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "paypal_amount", userName);
+        Contribution contribution = new Contribution(amount, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "paypal_amount", uName);
 
         // Insert document into contributions table
         db.collection("contributions")
