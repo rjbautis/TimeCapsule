@@ -65,7 +65,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         //mCapsuleId = "dvaOmVVVbVaHXjcjn2AI";
         //mCapsuleId = "PoiSYfSgGABQyuw4l9wH";
         //mCapsuleId = "3csUst4QZOjsrLDupeGT";
-        mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
+        //mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
 
         final Context context = OpenCapsuleActivity.this;
 
@@ -79,10 +79,10 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         // Get capsule id from bundle
         Bundle extras = getIntent().getExtras();
 
-//        if (extras != null) {
-//            mCapsuleId = extras.getString("capsuleId");
-//            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
-//        }
+        if (extras != null) {
+            mCapsuleId = extras.getString("capsuleId");
+            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+        }
 
         Query findContributionsQuery = db.collection("contributions").whereEqualTo("capsuleId", mCapsuleId);
         findContributionsQuery.get()
@@ -138,6 +138,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
                                                       ImageView spotifyAlbumImageView = customView.findViewById(R.id.carousel_spotify_art_view);
                                                       TextView spotifyTitleTextView = customView.findViewById(R.id.carousel_spotify_song_title_view);
                                                       LinearLayout spotifyView = customView.findViewById(R.id.carousel_spotify_view);
+                                                      TextView moneyView = customView.findViewById(R.id.carousel_money_view);
                                                       if(position < contributionList.size()) {
                                                           final ContributionItem currentContribution = contributionList.get(position);
                                                           if(currentContribution.type.equals("text")){
@@ -229,8 +230,11 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
                                                               // set touch listener to link to spotify
                                                           } else if(currentContribution.type.equals("paypal_amount")) {
-                                                              String moneyString = "$" + currentContribution.content;
-                                                              textView.setText(moneyString);
+                                                              String[] separated = currentContribution.content.split("\\|");
+
+                                                              String moneyString = "$" + separated[0] + "\n Transaction ID:" + separated[1];
+                                                              moneyView.setText(moneyString);
+                                                              moneyView.setVisibility(View.VISIBLE);
                                                           }
 
 

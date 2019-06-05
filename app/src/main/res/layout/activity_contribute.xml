@@ -292,16 +292,17 @@
             >
 
             <ImageButton
-                android:background="@drawable/rounded_paypal"
                 android:id="@+id/button_add_paypal_amount"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:adjustViewBounds="true"
+                android:background="@drawable/rounded_paypal"
+                android:onClick="showPayPalAmount"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/paypal"
-                android:src="@drawable/paypal"/>
+                android:src="@drawable/paypal"
+                app:srcCompat="@drawable/paypal" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -334,23 +335,21 @@
             android:layout_width="match_parent" />
 
         <EditText
+            android:id="@+id/edit_paypal_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_paypal_amount"
             android:fontFamily="@font/days_one"
-            android:visibility="gone"
             android:hint="Enter the amount of money you'd like to send here:"
-            />
+            android:visibility="gone" />
 
         <Button
+            android:id="@+id/button_submit_paypal_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/days_one"
-            android:id="@+id/button_submit_paypal_amount"
+            android:onClick="processPayment"
             android:text="Submit!"
-            android:visibility="gone"
-            android:onClick="submitPayPalAmount"
-            />
+            android:visibility="gone" />
 
         <android.support.v4.widget.Space
             android:layout_height="1dp"

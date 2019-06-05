@@ -29,7 +29,18 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text=""
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/carousel_money_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text=""
+        android:textSize="36sp"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/carousel_image_view"

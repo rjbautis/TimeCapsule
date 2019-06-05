@@ -1,5 +1,6 @@
 package com.android121.timecapsule;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,8 +35,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 public class ContributeActivity extends AppCompatActivity {
 
@@ -124,6 +132,11 @@ public class ContributeActivity extends AppCompatActivity {
         }
     }
 
+    public static final int PAYPAL_REQUEST_CODE = 7171;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(paypal_config.PAYPAL_CLIENT_ID);
+
     private static final String TAG = ContributeActivity.class.getSimpleName();
 
     private static final int RC_IMAGE_PICKER = 101;
@@ -164,6 +177,7 @@ public class ContributeActivity extends AppCompatActivity {
     // Paypal Links
     private EditText mPaypalAmount;
     private Button mPaypalSubmitButton;
+    static String amount;
 
     // Invite Friends
     private Button mInviteFriendButton;
@@ -263,9 +277,16 @@ public class ContributeActivity extends AppCompatActivity {
         // Paypal Amount References
         mPaypalAmount = findViewById(R.id.edit_paypal_amount);
         mPaypalSubmitButton = findViewById(R.id.button_submit_paypal_amount);
+        amount = "";
 
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
+
+        // start PayPal Service
+        Intent intent = new Intent (this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);
+
     }
 
     @Override
@@ -286,6 +307,82 @@ public class ContributeActivity extends AppCompatActivity {
             mVideo.setMediaController(mediaController);
             mediaController.setAnchorView(mVideo);
         }
+        if(requestCode == PAYPAL_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirmation != null) {
+                    try {
+                        String paymentDetails = confirmation.toJSONObject().toString(4);
+                        JSONObject jsonObject = new JSONObject((paymentDetails));
+                        String transactionID = jsonObject.getJSONObject("response").getString("id");
+                        String paymentToastString = "Payment succeeded! Transaction ID: " + transactionID;
+//                        startActivity(new Intent(this, PaymentDetails.class)
+//                                .putExtra("PaymentDetails", paymentDetails)
+//                                .putExtra("PaymentAmount", amount)
+//                        );
+
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        String senderId;
+
+                        if(currentUser != null) {
+                            Log.d(TAG, "Firebase user authenticated already");
+
+                            senderId = currentUser.getUid();
+                        } else {
+                            Log.d(TAG, "User not logged in!");
+                            senderId = null;
+                        }
+
+                        // Get PayPal Amount from editText
+                        String amount = (mPaypalAmount.getText().toString()) + "|" + transactionID;
+
+                        Contribution contribution = new Contribution(amount, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "paypal_amount", uName);
+
+                        // Insert document into contributions table
+                        db.collection("contributions")
+                                .add(contribution)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+
+                        // Collapse fields
+                        mPaypalAmount.setVisibility(EditText.GONE);
+                        mPaypalSubmitButton.setVisibility(Button.GONE);
+
+
+
+                        Toast.makeText(this, paymentToastString, Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else if (resultCode == Activity.RESULT_CANCELED)
+                Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
+        }
+        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID)
+            Toast.makeText(this, "Invalid", Toast.LENGTH_SHORT).show();
+    }
+
+    public void processPayment(View v) {
+        amount = mPaypalAmount.getText().toString();
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "USD",
+                // NOTE: REPLACE TIMECAPSULE@test.com with the recipient email
+                // TODO: REPLACE EMAIL WITH REAL EMAIL
+                "Donate to TimeCapsule@test.com", PayPalPayment.PAYMENT_INTENT_SALE);
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
     }
 
     // Toggles visibility of the note fields when the notes button is clicked
@@ -621,6 +718,16 @@ public class ContributeActivity extends AppCompatActivity {
         // Execute async task in background thread
         HttpDownloadTask downloadTask = new HttpDownloadTask();
         downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id, link);
+    }
+
+    public void showPayPalFields(View view) {
+        if (mPaypalAmount.getVisibility() == View.GONE) {
+            mPaypalAmount.setVisibility(View.VISIBLE);
+            mPaypalSubmitButton.setVisibility(View.VISIBLE);
+        } else {
+            mPaypalAmount.setVisibility(View.GONE);
+            mPaypalSubmitButton.setVisibility(View.GONE);
+        }
     }
 
     public void submitPayPalAmount(View view) {
