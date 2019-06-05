@@ -160,6 +160,10 @@ public class ContributeActivity extends AppCompatActivity {
     private EditText mSpotifyLink;
     private Button mSpotifySubmitButton;
 
+    // Paypal Links
+    private EditText mPaypalAmount;
+    private Button mPaypalSubmitButton;
+
     // Invite Friends
     private Button mInviteFriendButton;
     private EditText mInviteFriendsEditText;
@@ -225,6 +229,10 @@ public class ContributeActivity extends AppCompatActivity {
         mSpotifyLink = findViewById(R.id.edit_spotify_link);
         mSpotifySubmitButton = findViewById(R.id.button_submit_spotify_link);
 
+        // Paypal Amount References
+        mPaypalAmount = findViewById(R.id.edit_paypal_amount);
+        mPaypalSubmitButton = findViewById(R.id.button_submit_paypal_amount);
+
         mInviteFriendButton = findViewById(R.id.button_invite_friend);
         mInviteFriendsEditText = findViewById(R.id.edit_text_invite_friend);
     }
@@ -279,8 +287,6 @@ public class ContributeActivity extends AppCompatActivity {
     public void showSpotifyLinks(View view) {
         toggleSpotifyFields();
     }
-
-
     private void toggleSpotifyFields() {
         if (mSpotifyLink.getVisibility() == View.VISIBLE) {
             mSpotifyLink.setVisibility(View.GONE);
@@ -288,6 +294,19 @@ public class ContributeActivity extends AppCompatActivity {
         } else {
             mSpotifyLink.setVisibility(View.VISIBLE);
             mSpotifySubmitButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void showPayPalAmount(View view) {
+        togglePayPalFields();
+    }
+    private void togglePayPalFields() {
+        if (mPaypalAmount.getVisibility() == View.VISIBLE) {
+            mPaypalAmount.setVisibility(View.GONE);
+            mPaypalSubmitButton.setVisibility(View.GONE);
+        } else {
+            mPaypalAmount.setVisibility(View.VISIBLE);
+            mPaypalSubmitButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -571,6 +590,56 @@ public class ContributeActivity extends AppCompatActivity {
         // Execute async task in background thread
         HttpDownloadTask downloadTask = new HttpDownloadTask();
         downloadTask.execute("https://embed.spotify.com/oembed?url=spotify:track:" + id, link);
+    }
+
+    public void submitPayPalAmount(View view, String userName) {
+        //if the user tries to enter a negative money value
+        if (Integer.parseInt(mPaypalAmount.getText().toString()) <= 0) {
+            Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String senderId;
+
+        if(currentUser != null) {
+            Log.d(TAG, "Firebase user authenticated already");
+
+            senderId = currentUser.getUid();
+        } else {
+            Log.d(TAG, "User not logged in!");
+            senderId = null;
+        }
+
+        // Get PayPal Amount from editText
+        String amount = (mPaypalAmount.getText().toString());
+
+        Contribution contribution = new Contribution(amount, mCapsuleId, !mNoteIsPrivate.isChecked(), senderId, "paypal_amount", userName);
+
+        // Insert document into contributions table
+        db.collection("contributions")
+                .add(contribution)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        // Collapse fields
+        mPaypalAmount.setVisibility(EditText.GONE);
+        mPaypalSubmitButton.setVisibility(Button.GONE);
+
+        // Show toast message to confirm submission
+        Toast noteSubmittedToast = new Toast(this);
+        noteSubmittedToast.makeText(this, "Money from PayPal sent successfully!", Toast.LENGTH_SHORT).show();
+
     }
 
     public void showPictureFields(View view) {

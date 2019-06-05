@@ -333,6 +333,30 @@
             android:layout_height="1dp"
             android:layout_width="match_parent" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_paypal_amount"
+            android:fontFamily="@font/days_one"
+            android:visibility="gone"
+            android:hint="Enter the amount of money you'd like to send here:"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one"
+            android:id="@+id/button_submit_paypal_amount"
+            android:text="Submit!"
+            android:visibility="gone"
+            android:onClick="submitPayPalAmount"
+            />
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
+
+
         <Button
             android:id="@+id/button_invite_friends"
             android:layout_width="match_parent"
