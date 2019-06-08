@@ -67,7 +67,7 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
         //mCapsuleId = "dvaOmVVVbVaHXjcjn2AI";
         //mCapsuleId = "PoiSYfSgGABQyuw4l9wH";
         //mCapsuleId = "3csUst4QZOjsrLDupeGT";
-        mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
+        //mCapsuleId = "a9nvHEgsdBAdO4R21YBI";
 
         final Context context = OpenCapsuleActivity.this;
 
@@ -80,11 +80,11 @@ public class OpenCapsuleActivity extends YouTubeBaseActivity {
 
         // Get capsule id from bundle
         Bundle extras = getIntent().getExtras();
-//
-//        if (extras != null) {
-//            mCapsuleId = extras.getString("capsuleId");
-//            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
-//        }
+
+        if (extras != null) {
+            mCapsuleId = extras.getString("capsuleId");
+            Log.d(TAG, "capsuleId received from bundle:" + mCapsuleId);
+        }
 
         Query findContributionsQuery = db.collection("contributions").whereEqualTo("capsuleId", mCapsuleId);
         findContributionsQuery.get()

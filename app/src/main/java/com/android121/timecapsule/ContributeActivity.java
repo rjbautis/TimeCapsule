@@ -435,11 +435,11 @@ public class ContributeActivity extends AppCompatActivity {
         if(mNoteText.getVisibility() == EditText.VISIBLE){
             mNoteText.setVisibility(EditText.GONE);
             mNoteSubmitButton.setVisibility(Button.GONE);
-            mNoteIsPrivate.setVisibility(CheckBox.GONE);
+//            mNoteIsPrivate.setVisibility(CheckBox.GONE);
         } else {
             mNoteText.setVisibility(EditText.VISIBLE);
             mNoteSubmitButton.setVisibility(Button.VISIBLE);
-            mNoteIsPrivate.setVisibility(CheckBox.VISIBLE);
+//            mNoteIsPrivate.setVisibility(CheckBox.VISIBLE);
         }
     }
 
