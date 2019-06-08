@@ -15,12 +15,6 @@
         <activity android:name=".PaypalActivity">
         </activity>
         <activity
-            android:name=".testCustomCarouselActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".testCarouselActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ViewOpenCapsulesActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -34,9 +28,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".YoutubeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CreateCapsuleActivity"
